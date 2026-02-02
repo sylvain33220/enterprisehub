@@ -15,3 +15,4 @@ C:\documentdevpro\projetPro\C#.NET\enterprisehub\src\EnterpriseHub.Infrastructur
 C:\documentdevpro\projetPro\C#.NET\enterprisehub\src\EnterpriseHub.Infrastructure\obj\Debug\net8.0\refint\EnterpriseHub.Infrastructure.dll
 C:\documentdevpro\projetPro\C#.NET\enterprisehub\src\EnterpriseHub.Infrastructure\obj\Debug\net8.0\EnterpriseHub.Infrastructure.pdb
 C:\documentdevpro\projetPro\C#.NET\enterprisehub\src\EnterpriseHub.Infrastructure\obj\Debug\net8.0\ref\EnterpriseHub.Infrastructure.dll
+C:\documentdevpro\projetPro\C#.NET\enterprisehub\src\EnterpriseHub.Infrastructure\obj\Debug\net8.0\EnterpriseHub.Infrastructure.sourcelink.json

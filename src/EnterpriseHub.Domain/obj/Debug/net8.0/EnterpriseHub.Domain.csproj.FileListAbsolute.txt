@@ -9,3 +9,4 @@ C:\documentdevpro\projetPro\C#.NET\enterprisehub\src\EnterpriseHub.Domain\obj\De
 C:\documentdevpro\projetPro\C#.NET\enterprisehub\src\EnterpriseHub.Domain\obj\Debug\net8.0\refint\EnterpriseHub.Domain.dll
 C:\documentdevpro\projetPro\C#.NET\enterprisehub\src\EnterpriseHub.Domain\obj\Debug\net8.0\EnterpriseHub.Domain.pdb
 C:\documentdevpro\projetPro\C#.NET\enterprisehub\src\EnterpriseHub.Domain\obj\Debug\net8.0\ref\EnterpriseHub.Domain.dll
+C:\documentdevpro\projetPro\C#.NET\enterprisehub\src\EnterpriseHub.Domain\obj\Debug\net8.0\EnterpriseHub.Domain.sourcelink.json

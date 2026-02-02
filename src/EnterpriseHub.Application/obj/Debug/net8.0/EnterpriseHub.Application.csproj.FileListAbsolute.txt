@@ -13,3 +13,4 @@ C:\documentdevpro\projetPro\C#.NET\enterprisehub\src\EnterpriseHub.Application\o
 C:\documentdevpro\projetPro\C#.NET\enterprisehub\src\EnterpriseHub.Application\obj\Debug\net8.0\refint\EnterpriseHub.Application.dll
 C:\documentdevpro\projetPro\C#.NET\enterprisehub\src\EnterpriseHub.Application\obj\Debug\net8.0\EnterpriseHub.Application.pdb
 C:\documentdevpro\projetPro\C#.NET\enterprisehub\src\EnterpriseHub.Application\obj\Debug\net8.0\ref\EnterpriseHub.Application.dll
+C:\documentdevpro\projetPro\C#.NET\enterprisehub\src\EnterpriseHub.Application\obj\Debug\net8.0\EnterpriseHub.Application.sourcelink.json

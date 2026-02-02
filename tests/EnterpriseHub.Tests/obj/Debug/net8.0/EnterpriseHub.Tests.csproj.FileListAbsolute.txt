@@ -102,3 +102,4 @@ C:\documentdevpro\projetPro\C#.NET\enterprisehub\tests\EnterpriseHub.Tests\obj\D
 C:\documentdevpro\projetPro\C#.NET\enterprisehub\tests\EnterpriseHub.Tests\obj\Debug\net8.0\EnterpriseHub.Tests.pdb
 C:\documentdevpro\projetPro\C#.NET\enterprisehub\tests\EnterpriseHub.Tests\obj\Debug\net8.0\EnterpriseHub.Tests.genruntimeconfig.cache
 C:\documentdevpro\projetPro\C#.NET\enterprisehub\tests\EnterpriseHub.Tests\obj\Debug\net8.0\ref\EnterpriseHub.Tests.dll
+C:\documentdevpro\projetPro\C#.NET\enterprisehub\tests\EnterpriseHub.Tests\obj\Debug\net8.0\EnterpriseHub.Tests.sourcelink.json
