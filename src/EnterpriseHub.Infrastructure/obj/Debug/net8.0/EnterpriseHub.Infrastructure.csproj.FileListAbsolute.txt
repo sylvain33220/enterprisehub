@@ -1,4 +1,5 @@
 C:\documentdevpro\projetPro\C#.NET\enterprisehub\src\EnterpriseHub.Infrastructure\bin\Debug\net8.0\EnterpriseHub.Infrastructure.deps.json
+C:\documentdevpro\projetPro\C#.NET\enterprisehub\src\EnterpriseHub.Infrastructure\bin\Debug\net8.0\EnterpriseHub.Infrastructure.runtimeconfig.json
 C:\documentdevpro\projetPro\C#.NET\enterprisehub\src\EnterpriseHub.Infrastructure\bin\Debug\net8.0\EnterpriseHub.Infrastructure.dll
 C:\documentdevpro\projetPro\C#.NET\enterprisehub\src\EnterpriseHub.Infrastructure\bin\Debug\net8.0\EnterpriseHub.Infrastructure.pdb
 C:\documentdevpro\projetPro\C#.NET\enterprisehub\src\EnterpriseHub.Infrastructure\bin\Debug\net8.0\EnterpriseHub.Application.dll
@@ -10,9 +11,10 @@ C:\documentdevpro\projetPro\C#.NET\enterprisehub\src\EnterpriseHub.Infrastructur
 C:\documentdevpro\projetPro\C#.NET\enterprisehub\src\EnterpriseHub.Infrastructure\obj\Debug\net8.0\EnterpriseHub.Infrastructure.AssemblyInfoInputs.cache
 C:\documentdevpro\projetPro\C#.NET\enterprisehub\src\EnterpriseHub.Infrastructure\obj\Debug\net8.0\EnterpriseHub.Infrastructure.AssemblyInfo.cs
 C:\documentdevpro\projetPro\C#.NET\enterprisehub\src\EnterpriseHub.Infrastructure\obj\Debug\net8.0\EnterpriseHub.Infrastructure.csproj.CoreCompileInputs.cache
+C:\documentdevpro\projetPro\C#.NET\enterprisehub\src\EnterpriseHub.Infrastructure\obj\Debug\net8.0\EnterpriseHub.Infrastructure.sourcelink.json
 C:\documentdevpro\projetPro\C#.NET\enterprisehub\src\EnterpriseHub.Infrastructure\obj\Debug\net8.0\EnterpriseHub.Infrastructure.csproj.CopyComplete
 C:\documentdevpro\projetPro\C#.NET\enterprisehub\src\EnterpriseHub.Infrastructure\obj\Debug\net8.0\EnterpriseHub.Infrastructure.dll
 C:\documentdevpro\projetPro\C#.NET\enterprisehub\src\EnterpriseHub.Infrastructure\obj\Debug\net8.0\refint\EnterpriseHub.Infrastructure.dll
 C:\documentdevpro\projetPro\C#.NET\enterprisehub\src\EnterpriseHub.Infrastructure\obj\Debug\net8.0\EnterpriseHub.Infrastructure.pdb
+C:\documentdevpro\projetPro\C#.NET\enterprisehub\src\EnterpriseHub.Infrastructure\obj\Debug\net8.0\EnterpriseHub.Infrastructure.genruntimeconfig.cache
 C:\documentdevpro\projetPro\C#.NET\enterprisehub\src\EnterpriseHub.Infrastructure\obj\Debug\net8.0\ref\EnterpriseHub.Infrastructure.dll
-C:\documentdevpro\projetPro\C#.NET\enterprisehub\src\EnterpriseHub.Infrastructure\obj\Debug\net8.0\EnterpriseHub.Infrastructure.sourcelink.json

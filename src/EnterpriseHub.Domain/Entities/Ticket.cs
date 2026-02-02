@@ -15,9 +15,9 @@ public class Ticket : EntityBase
   public TicketStatus Status { get;private set;} = TicketStatus.Open;
 
   public DateTime? ResolvedAtUtc { get;private set; }
-
-  private Ticket() {}
-
+# pragma warning disable CS8618
+   protected Ticket() {}
+#pragma warning restore CS8618
   public Ticket(Guid projectId, string title, TicketPriority priority = TicketPriority.Medium)
   {
     if (projectId == Guid.Empty) throw new ArgumentException("ProjectId is required.");

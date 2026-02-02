@@ -3,7 +3,7 @@ using EnterpriseHub.Domain.Common;
 
 namespace EnterpriseHub.Domain.Entities;
 
-public abstract class User : EntityBase
+public class User : EntityBase
 {
     public string Email { get; private set; } = default!;
     public string PasswordHash { get; private set; } = default!;
@@ -11,7 +11,17 @@ public abstract class User : EntityBase
     public string LastName { get; private set; } = default!;
     public UserRole Role { get; private set; } = UserRole.Dev;
 
-    private User() { }
+#pragma warning disable CS8618
+     protected User() { }
+     
+#pragma warning restore CS8618
+     public class ConcreteUser : User
+     {
+         public ConcreteUser(string email, string passwordHash, string firstName, string lastName, UserRole role = UserRole.Dev)
+             : base(email, passwordHash, firstName, lastName, role)
+         {
+         }
+     }
 
      public User(string email, string passwordHash, string firstName, string lastName, UserRole role = UserRole.Dev)
     {

@@ -96,10 +96,10 @@ C:\documentdevpro\projetPro\C#.NET\enterprisehub\tests\EnterpriseHub.Tests\obj\D
 C:\documentdevpro\projetPro\C#.NET\enterprisehub\tests\EnterpriseHub.Tests\obj\Debug\net8.0\EnterpriseHub.Tests.AssemblyInfoInputs.cache
 C:\documentdevpro\projetPro\C#.NET\enterprisehub\tests\EnterpriseHub.Tests\obj\Debug\net8.0\EnterpriseHub.Tests.AssemblyInfo.cs
 C:\documentdevpro\projetPro\C#.NET\enterprisehub\tests\EnterpriseHub.Tests\obj\Debug\net8.0\EnterpriseHub.Tests.csproj.CoreCompileInputs.cache
+C:\documentdevpro\projetPro\C#.NET\enterprisehub\tests\EnterpriseHub.Tests\obj\Debug\net8.0\EnterpriseHub.Tests.sourcelink.json
 C:\documentdevpro\projetPro\C#.NET\enterprisehub\tests\EnterpriseHub.Tests\obj\Debug\net8.0\EnterpriseHub.Tests.csproj.CopyComplete
 C:\documentdevpro\projetPro\C#.NET\enterprisehub\tests\EnterpriseHub.Tests\obj\Debug\net8.0\EnterpriseHub.Tests.dll
 C:\documentdevpro\projetPro\C#.NET\enterprisehub\tests\EnterpriseHub.Tests\obj\Debug\net8.0\refint\EnterpriseHub.Tests.dll
 C:\documentdevpro\projetPro\C#.NET\enterprisehub\tests\EnterpriseHub.Tests\obj\Debug\net8.0\EnterpriseHub.Tests.pdb
 C:\documentdevpro\projetPro\C#.NET\enterprisehub\tests\EnterpriseHub.Tests\obj\Debug\net8.0\EnterpriseHub.Tests.genruntimeconfig.cache
 C:\documentdevpro\projetPro\C#.NET\enterprisehub\tests\EnterpriseHub.Tests\obj\Debug\net8.0\ref\EnterpriseHub.Tests.dll
-C:\documentdevpro\projetPro\C#.NET\enterprisehub\tests\EnterpriseHub.Tests\obj\Debug\net8.0\EnterpriseHub.Tests.sourcelink.json

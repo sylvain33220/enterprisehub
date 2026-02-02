@@ -14,7 +14,9 @@ public class Project : EntityBase
 
    public decimal? Budget {get;private set;}
 
-   private  Project() {}
+#pragma warning disable CS8618
+   protected Project() {}
+#pragma warning restore CS8618
 
    public Project(Guid clientId, string name)
   {

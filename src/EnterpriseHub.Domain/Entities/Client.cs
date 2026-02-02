@@ -9,8 +9,9 @@ public class Client : EntityBase
   public string? Phone {get; private set;}
   public bool IsActive {get; private set;} = true;
 
-  private Client() {}
-
+#pragma warning disable CS8618
+  protected Client() {}
+#pragma warning restore CS8618
   public Client(string name , string? email = null, string? phone = null)
   {
     SetName(name);
