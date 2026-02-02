@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "ybtrtOGYSVvH3NGhKpJRy9JBZuHFgWis97NV2uaCrCk=",
+  "Source": "EnterpriseHub.Api",
+  "BasePath": "_content/EnterpriseHub.Api",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}

@@ -1,0 +1,50 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v8.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v8.0": {
+      "EnterpriseHub.Infrastructure/1.0.0": {
+        "dependencies": {
+          "EnterpriseHub.Application": "1.0.0",
+          "EnterpriseHub.Domain": "1.0.0"
+        },
+        "runtime": {
+          "EnterpriseHub.Infrastructure.dll": {}
+        }
+      },
+      "EnterpriseHub.Application/1.0.0": {
+        "dependencies": {
+          "EnterpriseHub.Domain": "1.0.0"
+        },
+        "runtime": {
+          "EnterpriseHub.Application.dll": {}
+        }
+      },
+      "EnterpriseHub.Domain/1.0.0": {
+        "runtime": {
+          "EnterpriseHub.Domain.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "EnterpriseHub.Infrastructure/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "EnterpriseHub.Application/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "EnterpriseHub.Domain/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}

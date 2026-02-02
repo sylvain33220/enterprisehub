@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\build\EnterpriseHub.Api.props" />
+</Project>
