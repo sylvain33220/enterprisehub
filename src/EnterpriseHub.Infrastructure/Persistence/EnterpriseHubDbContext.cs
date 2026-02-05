@@ -17,6 +17,10 @@ public class EnterpriseHubDbContext : DbContext
     base.OnModelCreating(modelBuilder);
     modelBuilder.Entity<User>().HasIndex(u => u.Email).IsUnique();
 
+    modelBuilder.Entity<Client>()
+    .HasIndex(c => c.Email)
+    .IsUnique();
+
     modelBuilder.Entity<Project>()
             .HasOne<Client>()
             .WithMany()

@@ -12,38 +12,49 @@ public class Client : EntityBase
 #pragma warning disable CS8618
   protected Client() {}
 #pragma warning restore CS8618
-  public Client(string name , string? email = null, string? phone = null)
-  {
+ public Client(string name, string? email, string? phone)
+{
     SetName(name);
-    SetContact(email , phone);
-  }
+    SetEmail(email);
+    SetPhone(phone);
+    IsActive = true;
+}
 
-  public void SetName (string name)
-  {
-    name = (name ?? "").Trim();
-    if (string.IsNullOrWhiteSpace(name)) throw new ArgumentException("Client name is required.");
-    if (name.Length > 100) throw new ArgumentException("Client name is too long.");
-    Name = name;
+public void Update(string name, string? email, string? phone)
+{
+    SetName(name);
+    SetEmail(email);
+    SetPhone(phone);
     Touch();
-  }
+}
 
-  public void SetContact(string? email, string? phone)
-  {
-    email = string.IsNullOrWhiteSpace(email) ? null : email.Trim().ToLowerInvariant();
-    phone = string.IsNullOrWhiteSpace(phone) ? null : phone.Trim();
-
-    Email = email;
-    Phone = phone;
-    Touch();
-  }
-  public void Disable()
-  {
+public void Deactivate()
+{
     IsActive = false;
     Touch();
-  }
-  public void Enable()
-  {
+}
+
+public void Activate()
+{
     IsActive = true;
     Touch();
-  }
+}
+
+private void SetName(string name)
+{
+    if (string.IsNullOrWhiteSpace(name))
+        throw new ArgumentException("Client name is required.");
+
+    Name = name.Trim();
+}
+
+private void SetEmail(string? email)
+{
+    Email = string.IsNullOrWhiteSpace(email) ? null : email.Trim().ToLowerInvariant();
+}
+
+private void SetPhone(string? phone)
+{
+    Phone = string.IsNullOrWhiteSpace(phone) ? null : phone.Trim();
+}
 }

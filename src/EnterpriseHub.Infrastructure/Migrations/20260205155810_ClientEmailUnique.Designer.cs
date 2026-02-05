@@ -3,6 +3,7 @@ using System;
 using EnterpriseHub.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace EnterpriseHub.Infrastructure.Migrations
 {
     [DbContext(typeof(EnterpriseHubDbContext))]
-    partial class EnterpriseHubDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260205155810_ClientEmailUnique")]
+    partial class ClientEmailUnique
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
