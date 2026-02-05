@@ -25,8 +25,6 @@ public class Project : EntityBase
     SetName(name);
   }
 
-  // Removed duplicate SetName method
-
   public void SetName(string name)
   {
     name = (name ?? "").Trim();

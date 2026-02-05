@@ -64,4 +64,5 @@ public class User : EntityBase
         Role = role;
         Touch();
     }
+   
 }

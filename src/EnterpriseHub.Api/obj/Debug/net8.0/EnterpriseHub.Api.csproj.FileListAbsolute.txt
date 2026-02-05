@@ -5,7 +5,9 @@ C:\documentdevpro\projetPro\C#.NET\enterprisehub\src\EnterpriseHub.Api\bin\Debug
 C:\documentdevpro\projetPro\C#.NET\enterprisehub\src\EnterpriseHub.Api\bin\Debug\net8.0\EnterpriseHub.Api.runtimeconfig.json
 C:\documentdevpro\projetPro\C#.NET\enterprisehub\src\EnterpriseHub.Api\bin\Debug\net8.0\EnterpriseHub.Api.dll
 C:\documentdevpro\projetPro\C#.NET\enterprisehub\src\EnterpriseHub.Api\bin\Debug\net8.0\EnterpriseHub.Api.pdb
+C:\documentdevpro\projetPro\C#.NET\enterprisehub\src\EnterpriseHub.Api\bin\Debug\net8.0\BCrypt.Net-Next.dll
 C:\documentdevpro\projetPro\C#.NET\enterprisehub\src\EnterpriseHub.Api\bin\Debug\net8.0\Humanizer.dll
+C:\documentdevpro\projetPro\C#.NET\enterprisehub\src\EnterpriseHub.Api\bin\Debug\net8.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
 C:\documentdevpro\projetPro\C#.NET\enterprisehub\src\EnterpriseHub.Api\bin\Debug\net8.0\Microsoft.AspNetCore.OpenApi.dll
 C:\documentdevpro\projetPro\C#.NET\enterprisehub\src\EnterpriseHub.Api\bin\Debug\net8.0\Microsoft.Bcl.AsyncInterfaces.dll
 C:\documentdevpro\projetPro\C#.NET\enterprisehub\src\EnterpriseHub.Api\bin\Debug\net8.0\Microsoft.CodeAnalysis.dll
@@ -23,10 +25,18 @@ C:\documentdevpro\projetPro\C#.NET\enterprisehub\src\EnterpriseHub.Api\bin\Debug
 C:\documentdevpro\projetPro\C#.NET\enterprisehub\src\EnterpriseHub.Api\bin\Debug\net8.0\Microsoft.Extensions.Logging.dll
 C:\documentdevpro\projetPro\C#.NET\enterprisehub\src\EnterpriseHub.Api\bin\Debug\net8.0\Microsoft.Extensions.Logging.Abstractions.dll
 C:\documentdevpro\projetPro\C#.NET\enterprisehub\src\EnterpriseHub.Api\bin\Debug\net8.0\Microsoft.Extensions.Options.dll
+C:\documentdevpro\projetPro\C#.NET\enterprisehub\src\EnterpriseHub.Api\bin\Debug\net8.0\Microsoft.IdentityModel.Abstractions.dll
+C:\documentdevpro\projetPro\C#.NET\enterprisehub\src\EnterpriseHub.Api\bin\Debug\net8.0\Microsoft.IdentityModel.JsonWebTokens.dll
+C:\documentdevpro\projetPro\C#.NET\enterprisehub\src\EnterpriseHub.Api\bin\Debug\net8.0\Microsoft.IdentityModel.Logging.dll
+C:\documentdevpro\projetPro\C#.NET\enterprisehub\src\EnterpriseHub.Api\bin\Debug\net8.0\Microsoft.IdentityModel.Protocols.dll
+C:\documentdevpro\projetPro\C#.NET\enterprisehub\src\EnterpriseHub.Api\bin\Debug\net8.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+C:\documentdevpro\projetPro\C#.NET\enterprisehub\src\EnterpriseHub.Api\bin\Debug\net8.0\Microsoft.IdentityModel.Tokens.dll
 C:\documentdevpro\projetPro\C#.NET\enterprisehub\src\EnterpriseHub.Api\bin\Debug\net8.0\Microsoft.OpenApi.dll
 C:\documentdevpro\projetPro\C#.NET\enterprisehub\src\EnterpriseHub.Api\bin\Debug\net8.0\Mono.TextTemplating.dll
+C:\documentdevpro\projetPro\C#.NET\enterprisehub\src\EnterpriseHub.Api\bin\Debug\net8.0\MySqlConnector.dll
 C:\documentdevpro\projetPro\C#.NET\enterprisehub\src\EnterpriseHub.Api\bin\Debug\net8.0\Npgsql.dll
 C:\documentdevpro\projetPro\C#.NET\enterprisehub\src\EnterpriseHub.Api\bin\Debug\net8.0\Npgsql.EntityFrameworkCore.PostgreSQL.dll
+C:\documentdevpro\projetPro\C#.NET\enterprisehub\src\EnterpriseHub.Api\bin\Debug\net8.0\Pomelo.EntityFrameworkCore.MySql.dll
 C:\documentdevpro\projetPro\C#.NET\enterprisehub\src\EnterpriseHub.Api\bin\Debug\net8.0\Swashbuckle.AspNetCore.Swagger.dll
 C:\documentdevpro\projetPro\C#.NET\enterprisehub\src\EnterpriseHub.Api\bin\Debug\net8.0\Swashbuckle.AspNetCore.SwaggerGen.dll
 C:\documentdevpro\projetPro\C#.NET\enterprisehub\src\EnterpriseHub.Api\bin\Debug\net8.0\Swashbuckle.AspNetCore.SwaggerUI.dll
@@ -36,6 +46,7 @@ C:\documentdevpro\projetPro\C#.NET\enterprisehub\src\EnterpriseHub.Api\bin\Debug
 C:\documentdevpro\projetPro\C#.NET\enterprisehub\src\EnterpriseHub.Api\bin\Debug\net8.0\System.Composition.Hosting.dll
 C:\documentdevpro\projetPro\C#.NET\enterprisehub\src\EnterpriseHub.Api\bin\Debug\net8.0\System.Composition.Runtime.dll
 C:\documentdevpro\projetPro\C#.NET\enterprisehub\src\EnterpriseHub.Api\bin\Debug\net8.0\System.Composition.TypedParts.dll
+C:\documentdevpro\projetPro\C#.NET\enterprisehub\src\EnterpriseHub.Api\bin\Debug\net8.0\System.IdentityModel.Tokens.Jwt.dll
 C:\documentdevpro\projetPro\C#.NET\enterprisehub\src\EnterpriseHub.Api\bin\Debug\net8.0\cs\Microsoft.CodeAnalysis.resources.dll
 C:\documentdevpro\projetPro\C#.NET\enterprisehub\src\EnterpriseHub.Api\bin\Debug\net8.0\de\Microsoft.CodeAnalysis.resources.dll
 C:\documentdevpro\projetPro\C#.NET\enterprisehub\src\EnterpriseHub.Api\bin\Debug\net8.0\es\Microsoft.CodeAnalysis.resources.dll

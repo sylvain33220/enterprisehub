@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace EnterpriseHub.Infrastructure.Migrations
 {
     [DbContext(typeof(EnterpriseHubDbContext))]
-    [Migration("20260202121701_InitialCreate")]
+    [Migration("20260205134100_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -165,28 +165,12 @@ namespace EnterpriseHub.Infrastructure.Migrations
                     b.Property<DateTime>("UpdatedAtUtc")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<string>("UserType")
-                        .IsRequired()
-                        .HasMaxLength(13)
-                        .HasColumnType("character varying(13)");
-
                     b.HasKey("Id");
 
                     b.HasIndex("Email")
                         .IsUnique();
 
                     b.ToTable("Users");
-
-                    b.HasDiscriminator<string>("UserType").HasValue("User");
-
-                    b.UseTphMappingStrategy();
-                });
-
-            modelBuilder.Entity("EnterpriseHub.Domain.Entities.User+ConcreteUser", b =>
-                {
-                    b.HasBaseType("EnterpriseHub.Domain.Entities.User");
-
-                    b.HasDiscriminator().HasValue("ConcreteUser");
                 });
 
             modelBuilder.Entity("EnterpriseHub.Domain.Entities.Project", b =>
