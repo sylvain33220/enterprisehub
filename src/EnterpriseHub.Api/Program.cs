@@ -1,3 +1,11 @@
+/*
+@author: Sylvain Poteaux
+@date: 2024-06
+@site: https://www.studio-purple.com
+@description: Point d'entrée de l'API EnterpriseHub, configuration des services, middleware et pipeline de requêtes.
+@notes:
+- Utilisation de la Clean Architecture avec des ports et des implémentations d'infrastructure.
+*/
 using EnterpriseHub.Infrastructure.Extensions;
 // Auth 
 using EnterpriseHub.Application.Auth;
@@ -10,6 +18,9 @@ using EnterpriseHub.Application.Clients.Ports;
 using EnterpriseHub.Infrastructure.Persistence.Repositories;
 // JWT
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+// Middleware
+using EnterpriseHub.Api.Middlewares;
+// Hashing
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 var builder = WebApplication.CreateBuilder(args);
@@ -57,6 +68,7 @@ builder.Services.AddScoped<AuthService>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IPasswordHasher, BcryptPasswordHasher>();
 builder.Services.AddScoped<IJwtTokenGenerator, JwtTokenGenerator>();
+builder.Services.AddTransient<ExceptionHandlingMiddleware>();
 
 // JWT auth
 var jwtIssuer = builder.Configuration["Jwt:Issuer"];
@@ -95,8 +107,9 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.UseMiddleware<ExceptionHandlingMiddleware>();
 // (Option) tu peux commenter en dev si tu veux éviter le warning
-// app.UseHttpsRedirection();
+app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();

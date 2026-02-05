@@ -27,15 +27,8 @@ public class ClientsController : ControllerBase
     [HttpPost]
     public async Task<ActionResult<ClientDto>> Create([FromBody] CreateClientRequest req, CancellationToken ct)
     {
-        try
-        {
             var created = await _svc.CreateAsync(req, ct);
             return CreatedAtAction(nameof(GetById), new { id = created.Id }, created);
-        }
-        catch (InvalidOperationException ex)
-        {
-            return Conflict(new { message = ex.Message });
-        }
     }
 
     [HttpPut("{id:guid}")]
