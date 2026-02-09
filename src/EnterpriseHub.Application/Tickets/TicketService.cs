@@ -2,6 +2,7 @@ using EnterpriseHub.Application.Tickets.Dto;
 using EnterpriseHub.Application.Tickets.Ports;
 using EnterpriseHub.Application.Projects.Ports;
 using EnterpriseHub.Domain.Entities;
+using EnterpriseHub.Domain.Enums;
 
 namespace EnterpriseHub.Application.Tickets;
 
@@ -25,19 +26,19 @@ public class TicketService
         return ticket is null ? null : ToDto(ticket);
     }
 
-    public async Task<TicketDto> CreateAsync(CreateTicketRequest req, CancellationToken ct)
-    {
-        if (await _projects.GetByIdAsync(req.ProjectId, ct) is null)
-            throw new KeyNotFoundException("Project not found.");
+   public async Task<TicketDto> CreateAsync(CreateTicketRequest req, CancellationToken ct)
+{
+    if (await _projects.GetByIdAsync(req.ProjectId, ct) is null)
+        throw new KeyNotFoundException("Project not found.");
 
-        var priority = Enum.TryParse<EnterpriseHub.Domain.Enums.TicketPriority>(req.Description, true, out var parsedPriority)
-            ? parsedPriority
-            : throw new ArgumentException("Invalid ticket priority.", nameof(req.Description));
-        var ticket = new Ticket(Guid.NewGuid(), req.ProjectId.ToString(), priority.ToString());
-        await _repo.AddAsync(ticket, ct);
+    if (!Enum.IsDefined(typeof(TicketPriority), req.Priority))
+        throw new ArgumentException("Invalid ticket priority.", nameof(req.Priority));
 
-        return ToDto(ticket);
-    }
+    var ticket = new Ticket(req.ProjectId, req.Title, req.Description, req.Priority);
+    await _repo.AddAsync(ticket, ct);
+
+    return ToDto(ticket);
+}
 
     public async Task<TicketDto?> UpdateAsync(Guid id, UpdateTicketRequest req, CancellationToken ct)
     {
