@@ -1,3 +1,13 @@
+/*
+@file TicketService.cs
+@description Service for managing tickets in the EnterpriseHub application.
+@author Poteaux sylvain
+@site https://www.studio-purple.com
+@mail poteaux.sylvain@gmail.com
+@date © 2026 EnterpriseHub
+@EnterpriseHub is licensed under the MIT License. See LICENSE file in the project root for full
+@version 1.0 license information.
+*/
 using EnterpriseHub.Application.Tickets.Dto;
 using EnterpriseHub.Application.Tickets.Ports;
 using EnterpriseHub.Application.Projects.Ports;

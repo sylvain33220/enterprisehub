@@ -1,3 +1,12 @@
+/*
+@file InMemoryTicketRepository.cs
+@description In-memory implementation of the ITicketRepository interface for testing purposes in the EnterpriseHub application
+@author Poteaux sylvain
+@site https://www.studio-purple.com
+@date 2026-09-02
+@EnterpriseHub is licensed under the MIT License. See LICENSE file in the project root for full license information.    
+@version 1.0
+*/
 using EnterpriseHub.Application.Tickets.Ports;
 using EnterpriseHub.Domain.Entities;
 

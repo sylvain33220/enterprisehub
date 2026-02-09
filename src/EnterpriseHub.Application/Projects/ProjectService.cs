@@ -1,3 +1,13 @@
+/*
+@file ProjectService.cs
+@description Service for managing projects in the EnterpriseHub application.
+@author Poteaux sylvain
+@site https://www.studio-purple.com
+@mail poteaux.sylvain@gmail.com
+@date 2024-06-01
+@EnterpriseHub is licensed under the MIT License. See LICENSE file in the project root for full
+@version 1.0 license information.
+*/
 using EnterpriseHub.Application.Projects.Dto;
 using EnterpriseHub.Application.Projects.Ports;
 using EnterpriseHub.Application.Clients.Ports;

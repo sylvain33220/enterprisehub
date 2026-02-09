@@ -1,10 +1,12 @@
 /*
-@author: Sylvain Poteaux
-@date: 2024-06
-@site: https://www.studio-purple.com
-@description: Point d'entrée de l'API EnterpriseHub, configuration des services, middleware et pipeline de requêtes.
-@notes:
-- Utilisation de la Clean Architecture avec des ports et des implémentations d'infrastructure.
+@file Program.cs
+@description Entry point of the EnterpriseHub API application.
+@author Poteaux sylvain
+@site https://www.studio-purple.com
+@mail poteaux.sylvain@gmail.com
+@date © 2026 EnterpriseHub
+@EnterpriseHub is licensed under the MIT License. See LICENSE file in the project root for full license information.
+@version 1.0
 */
 using EnterpriseHub.Infrastructure.Extensions;
 // Auth 

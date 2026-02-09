@@ -1,3 +1,14 @@
+/*
+ * File: TicketService.cs
+ * Description: Application service responsible for ticket management.
+ *
+ * Author: Sylvain Poteaux
+ * Website: https://www.studio-purple.com
+ *
+ * © 2026 EnterpriseHub
+ * Licensed under the MIT License.
+ */
+
 using EnterpriseHub.Application.Tickets;
 using EnterpriseHub.Application.Tickets.Dto;
 using EnterpriseHub.Application.Tests.Fakes;

@@ -1,3 +1,13 @@
+/*
+@file ClientService.cs
+@description Service for managing clients in the EnterpriseHub application.
+@author Poteaux sylvain
+@site https://www.studio-purple.com
+@mail poteaux.sylvain@gmail.com
+ * © 2026 EnterpriseHub
+@EnterpriseHub is licensed under the MIT License. See LICENSE file in the project root for full license information.
+@version 1.0
+*/
 using EnterpriseHub.Application.Clients.Dto;
 using EnterpriseHub.Application.Clients.Ports;
 using EnterpriseHub.Domain.Entities;

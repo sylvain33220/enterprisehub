@@ -1,3 +1,14 @@
+/*
+ * File: AuthService.cs
+ * Description: Application service responsible for ticket management.
+ *
+ * Author: Sylvain Poteaux
+ * Website: https://www.studio-purple.com
+ *
+ * © 2026 EnterpriseHub
+ * Licensed under the MIT License.
+ */
+
 using EnterpriseHub.Application.Auth.Dto;
 using EnterpriseHub.Application.Auth.Ports;
 using EnterpriseHub.Domain.Entities;

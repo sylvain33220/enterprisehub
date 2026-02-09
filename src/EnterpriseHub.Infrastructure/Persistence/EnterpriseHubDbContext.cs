@@ -1,3 +1,13 @@
+/*
+@file EnterpriseHubDbContext.cs
+@description Entity Framework Core DbContext for the EnterpriseHub application, managing database access for users, clients, projects, and tickets.
+@author Poteaux sylvain
+@site https://www.studio-purple.com
+@mail poteaux.sylvain@gmail.com
+@date 2026-09-02
+@EnterpriseHub is licensed under the MIT License. See LICENSE file in the project root for full license information.
+@version 1.0
+*/
 using EnterpriseHub.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
