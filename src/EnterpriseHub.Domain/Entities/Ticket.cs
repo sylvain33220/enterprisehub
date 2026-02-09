@@ -16,17 +16,18 @@ public class Ticket : EntityBase
 
   public DateTime? ResolvedAtUtc { get;private set; }
 # pragma warning disable CS8618
-   protected Ticket() {}
+   protected Ticket() { }
 #pragma warning restore CS8618
-  public Ticket(Guid projectId, string title, TicketPriority priority = TicketPriority.Medium)
-  {
-    if (projectId == Guid.Empty) throw new ArgumentException("ProjectId is required.");
+public Ticket(Guid projectId, string title, string? description = null, TicketPriority priority = TicketPriority.Medium)
+{
     ProjectId = projectId;
     SetTitle(title);
+    Description = description?.Trim();
     Priority = priority;
-  }
+    Status = TicketStatus.Open;
+}
 
-  public void SetTitle(string title)
+  private void SetTitle(string title)
   {
     title = (title ?? "").Trim();
     if (string.IsNullOrWhiteSpace(title)) throw new ArgumentException("Ticket title is required.");
@@ -54,10 +55,25 @@ public class Ticket : EntityBase
         Status = status;
         Touch();
     }
+  
+  public void Update(string title, string? description)
+  {
+    SetTitle(title);
+    Description = description?.Trim();
+    Touch();
+  }
 
   public void ChangePriority(TicketPriority priority)
   {
     Priority = priority;
     Touch();
-  }    
+  }
+
+  public void UpdateStatus(string status)
+  {
+    if (!Enum.TryParse<TicketStatus>(status, true, out var parsedStatus))
+      throw new ArgumentException("Invalid status value.");
+
+    ChangeStatus(parsedStatus);
+  }
 }

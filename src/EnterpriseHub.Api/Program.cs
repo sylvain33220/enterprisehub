@@ -14,6 +14,12 @@ using EnterpriseHub.Infrastructure.Auth;
 // Clients
 using EnterpriseHub.Application.Clients;
 using EnterpriseHub.Application.Clients.Ports;
+// Projects
+using EnterpriseHub.Application.Projects;
+using EnterpriseHub.Application.Projects.Ports;
+// Tickets
+using EnterpriseHub.Application.Tickets;
+using EnterpriseHub.Application.Tickets.Ports;
 // Repositories
 using EnterpriseHub.Infrastructure.Persistence.Repositories;
 // JWT
@@ -69,6 +75,11 @@ builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IPasswordHasher, BcryptPasswordHasher>();
 builder.Services.AddScoped<IJwtTokenGenerator, JwtTokenGenerator>();
 builder.Services.AddTransient<ExceptionHandlingMiddleware>();
+builder.Services.AddScoped<ProjectService>();
+builder.Services.AddScoped<IProjectRepository, ProjectRepository>();
+builder.Services.AddScoped<TicketService>();
+builder.Services.AddScoped<ITicketRepository, TicketRepository>();
+
 
 // JWT auth
 var jwtIssuer = builder.Configuration["Jwt:Issuer"];
