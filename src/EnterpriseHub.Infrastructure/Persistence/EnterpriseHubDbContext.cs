@@ -10,6 +10,8 @@
 */
 using EnterpriseHub.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata;
+using Npgsql.NameTranslation;
 
 namespace EnterpriseHub.Infrastructure.Persistence;
 
@@ -25,20 +27,64 @@ public class EnterpriseHubDbContext : DbContext
   protected override void OnModelCreating(ModelBuilder modelBuilder)
   {
     base.OnModelCreating(modelBuilder);
-    modelBuilder.Entity<User>().HasIndex(u => u.Email).IsUnique();
+     // ✅ Force snake_case for Postgres (tables + columns)
+    var translator = new NpgsqlSnakeCaseNameTranslator();
 
-    modelBuilder.Entity<Client>()
-    .HasIndex(c => c.Email)
-    .IsUnique();
+    foreach (var entity in modelBuilder.Model.GetEntityTypes())
+    {
+        // Table
+        var tableName = entity.GetTableName();
+        if (!string.IsNullOrWhiteSpace(tableName))
+        {
+            entity.SetTableName(translator.TranslateMemberName(tableName));
+        }
 
-    modelBuilder.Entity<Project>()
-            .HasOne<Client>()
+        // Columns
+        foreach (var property in entity.GetProperties())
+        {
+            var storeObjectId = StoreObjectIdentifier.Table(entity.GetTableName()!, entity.GetSchema());
+            var columnName = property.GetColumnName(storeObjectId);
+
+            if (!string.IsNullOrWhiteSpace(columnName))
+            {
+                property.SetColumnName(translator.TranslateMemberName(columnName));
+            }
+        }
+    }
+        // USERS
+    modelBuilder.Entity<User>(b =>
+    {
+        b.ToTable("users");
+        b.HasIndex(u => u.Email).IsUnique();
+    });
+
+    // CLIENTS
+    modelBuilder.Entity<Client>(b =>
+    {
+        b.ToTable("clients");
+        b.HasIndex(c => c.Email).IsUnique();
+    });
+
+    // PROJECTS
+    modelBuilder.Entity<Project>(b =>
+    {
+        b.ToTable("projects");
+
+        b.HasOne<Client>()
             .WithMany()
-            .HasForeignKey(x => x.ClientId);
+            .HasForeignKey(p => p.ClientId)
+            .OnDelete(DeleteBehavior.Restrict); // optionnel mais souvent mieux
+    });
 
-    modelBuilder.Entity<Ticket>()
-            .HasOne<Project>()
+    // TICKETS
+    modelBuilder.Entity<Ticket>(b =>
+    {
+        b.ToTable("tickets");
+
+        b.HasOne<Project>()
             .WithMany()
-            .HasForeignKey(x => x.ProjectId);
+            .HasForeignKey(t => t.ProjectId)
+            .OnDelete(DeleteBehavior.Restrict); // optionnel
+    });
   }
 }

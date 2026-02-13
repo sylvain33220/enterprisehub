@@ -9,5 +9,6 @@ public record TicketDto(
     string? Description,
     TicketPriority Priority,
     TicketStatus Status,
+    Guid? AssignedToUserId,
     Guid ProjectId
 );

@@ -1,6 +1,8 @@
 using EnterpriseHub.Domain.Enums;
 using EnterpriseHub.Domain.Common;
 
+using System.ComponentModel.DataAnnotations.Schema;
+
 namespace EnterpriseHub.Domain.Entities;
 
 public class User : EntityBase

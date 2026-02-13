@@ -31,6 +31,11 @@ using EnterpriseHub.Api.Middlewares;
 // Hashing
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+// Dashboard
+using EnterpriseHub.Application.Dashboard.Ports;
+using EnterpriseHub.Infrastructure.Querying;
+
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Services
@@ -81,6 +86,8 @@ builder.Services.AddScoped<ProjectService>();
 builder.Services.AddScoped<IProjectRepository, ProjectRepository>();
 builder.Services.AddScoped<TicketService>();
 builder.Services.AddScoped<ITicketRepository, TicketRepository>();
+builder.Services.AddScoped<IDbConnectionFactory, NpgsqlConnectionFactory>();
+builder.Services.AddScoped<IDashboardReadRepository, DashboardReadRepository>();
 
 
 // JWT auth
@@ -119,6 +126,10 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+else
+{
+    app.UseHttpsRedirection();
+}
 
 app.UseMiddleware<ExceptionHandlingMiddleware>();
 // (Option) tu peux commenter en dev si tu veux éviter le warning
@@ -126,5 +137,7 @@ app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
+
+app.MapGet("/", () => Results.Ok("EnterpriseHub API is running ✅"));
 
 app.Run();

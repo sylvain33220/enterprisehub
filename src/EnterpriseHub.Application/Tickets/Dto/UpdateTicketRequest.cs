@@ -5,5 +5,6 @@ public record UpdateTicketRequest(
     string Title,
     string? Description,
     TicketStatus Status,
-    TicketPriority Priority
+    TicketPriority Priority,
+    Guid? AssignedToUserId 
 );

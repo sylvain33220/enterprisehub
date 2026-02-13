@@ -12,6 +12,9 @@ using EnterpriseHub.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Npgsql.EntityFrameworkCore.PostgreSQL.Infrastructure;
+
+
 
 namespace EnterpriseHub.Infrastructure.Extensions;
 
@@ -32,7 +35,8 @@ public static class DatabaseServiceCollectionExtensions
                 case "postgres":
                 case "postgresql":
                 case "npgsql":
-                    options.UseNpgsql(cs);
+                    options.UseNpgsql(cs)
+                    .UseSnakeCaseNamingConvention();
                     break;
 
                 case "mysql":

@@ -57,6 +57,7 @@ public class TicketService
 
         ticket.Update(req.Title, req.Description);
         ticket.UpdateStatus(req.Status.ToString());
+        ticket.AssingnTo(req.AssignedToUserId);
 
         await _repo.UpdateAsync(ticket, ct);
         return ToDto(ticket);
@@ -72,5 +73,5 @@ public class TicketService
     }
 
     private static TicketDto ToDto(Ticket t)
-        => new(t.Id, t.Title, t.Description, t.Priority, t.Status, t.ProjectId);
+        => new(t.Id, t.Title, t.Description, t.Priority, t.Status, t.AssignedToUserId, t.ProjectId );
 }
