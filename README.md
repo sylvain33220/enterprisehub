@@ -92,6 +92,10 @@ dotnet ef database update \
 4) Run the API
 dotnet run --project src/EnterpriseHub.Api
 
+5) docker
+docker compose down
+docker compose up --build
+docker logs -f enterprisehub-api
 
 Swagger UI:
 👉 http://localhost:5077/swagger
