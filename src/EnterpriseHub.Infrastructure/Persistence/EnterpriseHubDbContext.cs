@@ -27,30 +27,7 @@ public class EnterpriseHubDbContext : DbContext
   protected override void OnModelCreating(ModelBuilder modelBuilder)
   {
     base.OnModelCreating(modelBuilder);
-     // ✅ Force snake_case for Postgres (tables + columns)
-    var translator = new NpgsqlSnakeCaseNameTranslator();
-
-    foreach (var entity in modelBuilder.Model.GetEntityTypes())
-    {
-        // Table
-        var tableName = entity.GetTableName();
-        if (!string.IsNullOrWhiteSpace(tableName))
-        {
-            entity.SetTableName(translator.TranslateMemberName(tableName));
-        }
-
-        // Columns
-        foreach (var property in entity.GetProperties())
-        {
-            var storeObjectId = StoreObjectIdentifier.Table(entity.GetTableName()!, entity.GetSchema());
-            var columnName = property.GetColumnName(storeObjectId);
-
-            if (!string.IsNullOrWhiteSpace(columnName))
-            {
-                property.SetColumnName(translator.TranslateMemberName(columnName));
-            }
-        }
-    }
+    
         // USERS
     modelBuilder.Entity<User>(b =>
     {

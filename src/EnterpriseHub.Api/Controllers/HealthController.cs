@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 namespace EnterpriseHub.Api.Controllers;
 
 [ApiController]
-[Route("health")]
+[Route("health-controller")]
 public class HealthController : ControllerBase
 {
     private readonly EnterpriseHubDbContext _db;

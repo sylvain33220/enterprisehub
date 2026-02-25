@@ -34,7 +34,9 @@ using System.Text;
 // Dashboard
 using EnterpriseHub.Application.Dashboard.Ports;
 using EnterpriseHub.Infrastructure.Querying;
-
+// DB
+using EnterpriseHub.Infrastructure.Persistence;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -125,6 +127,9 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
+    using var scope = app.Services.CreateScope();
+    var db = scope.ServiceProvider.GetRequiredService<EnterpriseHubDbContext>();
+    db.Database.Migrate();
 }
 else
 {
@@ -139,5 +144,6 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.MapGet("/", () => Results.Ok("EnterpriseHub API is running ✅"));
-
+app.MapGet("/health", () => Results.Ok(new { status = "Healthy", timestamp = DateTime.UtcNow }));
+app.MapGet("/ready", () => Results.Ok(new { status = "ready" }));
 app.Run();

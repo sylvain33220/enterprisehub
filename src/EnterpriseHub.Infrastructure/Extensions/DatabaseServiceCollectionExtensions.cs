@@ -35,8 +35,7 @@ public static class DatabaseServiceCollectionExtensions
                 case "postgres":
                 case "postgresql":
                 case "npgsql":
-                    options.UseNpgsql(cs)
-                    .UseSnakeCaseNamingConvention();
+                    options.UseNpgsql(cs);
                     break;
 
                 case "mysql":
