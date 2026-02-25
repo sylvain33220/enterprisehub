@@ -1,0 +1,49 @@
+services:
+  db:
+    image: postgres:16
+    container_name: enterprisehub-db
+    environment:
+      POSTGRES_DB: enterprisehub
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    volumes:
+      - enterprisehub_pg:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d enterprisehub"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+    networks: [enterprisehub-net]
+
+  api:
+    build:
+      context: .
+      dockerfile: src/enterprisehub.Api/Dockerfile
+    container_name: enterprisehub-api
+    depends_on:
+      db:
+        condition: service_healthy
+    ports:
+      - "5077:8080"
+    environment:
+      ASPNETCORE_ENVIRONMENT: Production
+      ConnectionStrings__Default: Host=db;Port=5432;Database=enterprisehub;Username=postgres;Password=${POSTGRES_PASSWORD}
+      Database__Provider: postgres
+      Jwt__Issuer: "enterprisehub"
+      Jwt__Audience: "enterprisehub"
+      Jwt__Key: ${JWT_KEY}
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://localhost:8080/health >/dev/null 2>&1 || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+    networks: [enterprisehub-net]
+
+volumes:
+  enterprisehub_pg: {}
+
+networks:
+  enterprisehub-net:
+    driver: bridge

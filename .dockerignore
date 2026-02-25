@@ -3,3 +3,4 @@ obj/
 .git/
 .gitignore
 docker-compose.yml
+.env
