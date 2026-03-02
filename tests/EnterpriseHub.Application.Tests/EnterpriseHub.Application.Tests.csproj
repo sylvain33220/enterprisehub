@@ -27,5 +27,8 @@
     <ProjectReference Include="..\..\src\EnterpriseHub.Application\EnterpriseHub.Application.csproj" />
     <ProjectReference Include="..\..\src\EnterpriseHub.Domain\EnterpriseHub.Domain.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" Version="8.0.0" />
+  </ItemGroup>
 
 </Project>

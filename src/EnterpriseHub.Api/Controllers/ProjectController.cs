@@ -1,3 +1,9 @@
+/*
+* @file  : ProjectController.cs
+* @brief : Controller for managing projects, including CRUD operations.
+* @date  : 2024-06-01
+* @author : Poteaux sylvain
+*/
 using EnterpriseHub.Application.Projects;
 using EnterpriseHub.Application.Projects.Dto;
 using Microsoft.AspNetCore.Authorization;

@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("EnterpriseHub.Application")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+3496cffb1a1b02c40bd3e5fcc1a42719350599c7")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+e6e9d2bef6a593e1e88f8c56b1fdc6497c82a1d1")]
 [assembly: System.Reflection.AssemblyProductAttribute("EnterpriseHub.Application")]
 [assembly: System.Reflection.AssemblyTitleAttribute("EnterpriseHub.Application")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

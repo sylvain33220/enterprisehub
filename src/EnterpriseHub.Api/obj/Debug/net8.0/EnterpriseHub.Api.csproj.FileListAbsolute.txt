@@ -7,8 +7,9 @@ C:\documentdevpro\projetPro\C#.NET\enterprisehub\src\EnterpriseHub.Api\bin\Debug
 C:\documentdevpro\projetPro\C#.NET\enterprisehub\src\EnterpriseHub.Api\bin\Debug\net8.0\EnterpriseHub.Api.pdb
 C:\documentdevpro\projetPro\C#.NET\enterprisehub\src\EnterpriseHub.Api\bin\Debug\net8.0\BCrypt.Net-Next.dll
 C:\documentdevpro\projetPro\C#.NET\enterprisehub\src\EnterpriseHub.Api\bin\Debug\net8.0\Dapper.dll
-C:\documentdevpro\projetPro\C#.NET\enterprisehub\src\EnterpriseHub.Api\bin\Debug\net8.0\EFCore.NamingConventions.dll
 C:\documentdevpro\projetPro\C#.NET\enterprisehub\src\EnterpriseHub.Api\bin\Debug\net8.0\Humanizer.dll
+C:\documentdevpro\projetPro\C#.NET\enterprisehub\src\EnterpriseHub.Api\bin\Debug\net8.0\MediatR.dll
+C:\documentdevpro\projetPro\C#.NET\enterprisehub\src\EnterpriseHub.Api\bin\Debug\net8.0\MediatR.Contracts.dll
 C:\documentdevpro\projetPro\C#.NET\enterprisehub\src\EnterpriseHub.Api\bin\Debug\net8.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
 C:\documentdevpro\projetPro\C#.NET\enterprisehub\src\EnterpriseHub.Api\bin\Debug\net8.0\Microsoft.AspNetCore.OpenApi.dll
 C:\documentdevpro\projetPro\C#.NET\enterprisehub\src\EnterpriseHub.Api\bin\Debug\net8.0\Microsoft.Bcl.AsyncInterfaces.dll
@@ -48,6 +49,7 @@ C:\documentdevpro\projetPro\C#.NET\enterprisehub\src\EnterpriseHub.Api\bin\Debug
 C:\documentdevpro\projetPro\C#.NET\enterprisehub\src\EnterpriseHub.Api\bin\Debug\net8.0\System.Composition.Hosting.dll
 C:\documentdevpro\projetPro\C#.NET\enterprisehub\src\EnterpriseHub.Api\bin\Debug\net8.0\System.Composition.Runtime.dll
 C:\documentdevpro\projetPro\C#.NET\enterprisehub\src\EnterpriseHub.Api\bin\Debug\net8.0\System.Composition.TypedParts.dll
+C:\documentdevpro\projetPro\C#.NET\enterprisehub\src\EnterpriseHub.Api\bin\Debug\net8.0\System.Diagnostics.DiagnosticSource.dll
 C:\documentdevpro\projetPro\C#.NET\enterprisehub\src\EnterpriseHub.Api\bin\Debug\net8.0\System.IdentityModel.Tokens.Jwt.dll
 C:\documentdevpro\projetPro\C#.NET\enterprisehub\src\EnterpriseHub.Api\bin\Debug\net8.0\cs\Microsoft.CodeAnalysis.resources.dll
 C:\documentdevpro\projetPro\C#.NET\enterprisehub\src\EnterpriseHub.Api\bin\Debug\net8.0\de\Microsoft.CodeAnalysis.resources.dll

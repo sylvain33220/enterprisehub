@@ -1,67 +1,80 @@
-/*
-@file EnterpriseHubDbContext.cs
-@description Entity Framework Core DbContext for the EnterpriseHub application, managing database access for users, clients, projects, and tickets.
-@author Poteaux sylvain
-@site https://www.studio-purple.com
-@mail poteaux.sylvain@gmail.com
-@date 2026-09-02
-@EnterpriseHub is licensed under the MIT License. See LICENSE file in the project root for full license information.
-@version 1.0
-*/
+using EnterpriseHub.Application.Common.Interfaces;
 using EnterpriseHub.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata;
-using Npgsql.NameTranslation;
 
 namespace EnterpriseHub.Infrastructure.Persistence;
 
-public class EnterpriseHubDbContext : DbContext
+public class EnterpriseHubDbContext : DbContext, IEnterpriseHubDbContext
 {
-  public EnterpriseHubDbContext(DbContextOptions<EnterpriseHubDbContext> options) : base(options)
-  {}
-  public DbSet<User> Users => Set<User>();
-  public DbSet<Client> Clients => Set<Client>();
-  public DbSet<Project> Projects => Set<Project>();
-  public DbSet<Ticket> Tickets => Set<Ticket>();
+    public EnterpriseHubDbContext(DbContextOptions<EnterpriseHubDbContext> options) : base(options) {}
 
-  protected override void OnModelCreating(ModelBuilder modelBuilder)
-  {
-    base.OnModelCreating(modelBuilder);
-    
-        // USERS
-    modelBuilder.Entity<User>(b =>
+    public DbSet<User> Users => Set<User>();
+    public DbSet<Client> Clients => Set<Client>();
+    public DbSet<Project> Projects => Set<Project>();
+    public DbSet<Ticket> Tickets => Set<Ticket>();
+    public DbSet<RefreshToken> RefreshTokens => Set<RefreshToken>();
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        b.ToTable("users");
-        b.HasIndex(u => u.Email).IsUnique();
-    });
+        base.OnModelCreating(modelBuilder);
 
-    // CLIENTS
-    modelBuilder.Entity<Client>(b =>
-    {
-        b.ToTable("clients");
-        b.HasIndex(c => c.Email).IsUnique();
-    });
+        modelBuilder.Entity<User>(b =>
+        {
+            b.ToTable("users");
+            b.HasIndex(u => u.Email).IsUnique();
+        });
 
-    // PROJECTS
-    modelBuilder.Entity<Project>(b =>
-    {
-        b.ToTable("projects");
+        modelBuilder.Entity<Client>(b =>
+        {
+            b.ToTable("clients");
+            b.HasIndex(c => c.Email).IsUnique();
+        });
 
-        b.HasOne<Client>()
-            .WithMany()
-            .HasForeignKey(p => p.ClientId)
-            .OnDelete(DeleteBehavior.Restrict); // optionnel mais souvent mieux
-    });
+        modelBuilder.Entity<Project>(b =>
+        {
+            b.ToTable("projects");
 
-    // TICKETS
-    modelBuilder.Entity<Ticket>(b =>
-    {
-        b.ToTable("tickets");
+            b.HasOne<Client>()
+                .WithMany()
+                .HasForeignKey(p => p.ClientId)
+                .OnDelete(DeleteBehavior.Restrict);
+        });
 
-        b.HasOne<Project>()
-            .WithMany()
-            .HasForeignKey(t => t.ProjectId)
-            .OnDelete(DeleteBehavior.Restrict); // optionnel
-    });
-  }
+        modelBuilder.Entity<Ticket>(b =>
+        {
+            b.ToTable("tickets");
+
+            b.HasOne<Project>()
+                .WithMany()
+                .HasForeignKey(t => t.ProjectId)
+                .OnDelete(DeleteBehavior.Restrict);
+        });
+
+        modelBuilder.Entity<RefreshToken>(b =>
+        {
+            b.ToTable("refresh_tokens");
+            b.HasIndex(x => x.TokenHash).IsUnique();
+            b.HasIndex(x => x.UserId);
+
+            b.Property(x => x.TokenHash).HasMaxLength(2000).IsRequired();
+            b.Property(x => x.CreatedByIp).HasMaxLength(64);
+            b.Property(x => x.UserAgent).HasMaxLength(512);
+
+            b.HasOne<User>()
+                .WithMany()
+                .HasForeignKey(x => x.UserId)
+                .OnDelete(DeleteBehavior.Cascade);
+        });
+    }
+      // ✅ Impl IEnterpriseHubDbContext
+    public async Task<User?> FindUserByEmailAsync(string email, CancellationToken ct)
+        => await Users.SingleOrDefaultAsync(u => u.Email == email, ct);
+
+    public async Task<User?> GetUserByIdAsync(Guid userId, CancellationToken ct)
+        => await Users.SingleOrDefaultAsync(u => u.Id == userId, ct);
+
+    public async Task<RefreshToken?> FindRefreshTokenByHashAsync(string tokenHash, CancellationToken ct)
+        => await RefreshTokens.SingleOrDefaultAsync(x => x.TokenHash == tokenHash, ct);
+
+    public void AddRefreshToken(RefreshToken token) => RefreshTokens.Add(token);
 }

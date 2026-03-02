@@ -37,6 +37,9 @@ using EnterpriseHub.Infrastructure.Querying;
 // DB
 using EnterpriseHub.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
+using EnterpriseHub.Application;
+using EnterpriseHub.Application.Common.Interfaces;
+using EnterpriseHub.Api.Auth;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -90,7 +93,13 @@ builder.Services.AddScoped<TicketService>();
 builder.Services.AddScoped<ITicketRepository, TicketRepository>();
 builder.Services.AddScoped<IDbConnectionFactory, NpgsqlConnectionFactory>();
 builder.Services.AddScoped<IDashboardReadRepository, DashboardReadRepository>();
+builder.Services.AddSingleton<IRefreshTokenService, RefreshTokenService>();
+builder.Services.AddScoped<IEnterpriseHubDbContext>(sp =>
+    sp.GetRequiredService<EnterpriseHubDbContext>());
+builder.Services.Configure<CookieConfig>(
+    builder.Configuration.GetSection("AuthCookies"));
 
+builder.Services.AddApplication();  
 
 // JWT auth
 var jwtIssuer = builder.Configuration["Jwt:Issuer"];
@@ -118,11 +127,22 @@ builder.Services
 builder.Services.AddScoped<ClientService>();
 builder.Services.AddScoped<IClientRepository, ClientRepository>();
 
-builder.Services.AddAuthorization();
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("AdminOnly", policy => policy.RequireRole("Admin"));
+    options.AddPolicy("DevOnly", policy => policy.RequireRole("Dev"));
+    options.AddPolicy("CanManageUsers", policy =>
+    policy.RequireClaim("perm", "users:write"));
+});
 
 var app = builder.Build();
-
-// Pipeline
+if (builder.Configuration.GetValue<bool>("Database:AutoMigrate"))
+{
+    using var scope = app.Services.CreateScope();
+    var db = scope.ServiceProvider.GetRequiredService<EnterpriseHubDbContext>();
+    db.Database.Migrate();
+}
+// Swagger + auto-migrate uniquement en dev
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -131,19 +151,22 @@ if (app.Environment.IsDevelopment())
     var db = scope.ServiceProvider.GetRequiredService<EnterpriseHubDbContext>();
     db.Database.Migrate();
 }
-else
+if (app.Environment.IsDevelopment())
 {
-    app.UseHttpsRedirection();
+    app.MapGet("/__throw/conflict", async context => throw new EnterpriseHub.Application.Common.Exceptions.ConflictException("boom"));
+    app.MapGet("/__throw/forbidden", async context => throw new EnterpriseHub.Application.Common.Exceptions.ForbiddenException("nope"));
 }
-
+// Pipeline commun (1 seule fois)
 app.UseMiddleware<ExceptionHandlingMiddleware>();
-// (Option) tu peux commenter en dev si tu veux éviter le warning
+
 app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
+
 app.MapControllers();
 
 app.MapGet("/", () => Results.Ok("EnterpriseHub API is running ✅"));
 app.MapGet("/health", () => Results.Ok(new { status = "Healthy", timestamp = DateTime.UtcNow }));
 app.MapGet("/ready", () => Results.Ok(new { status = "ready" }));
 app.Run();
+public partial class Program { }
