@@ -40,16 +40,72 @@ using Microsoft.EntityFrameworkCore;
 using EnterpriseHub.Application;
 using EnterpriseHub.Application.Common.Interfaces;
 using EnterpriseHub.Api.Auth;
+// Serilog
+using Serilog;
+// API versioning
+using Asp.Versioning;
+// Rate limiting
+using System.Threading.RateLimiting;
+using Microsoft.AspNetCore.RateLimiting;
+using EnterpriseHub.Application.Common.Exceptions;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// Configure Serilog
+Log.Logger = new LoggerConfiguration()
+    .ReadFrom.Configuration(builder.Configuration)
+    .Enrich.FromLogContext()
+    .WriteTo.Console()
+    .CreateLogger();
+
+builder.Host.UseSerilog();
+
 // Services
+builder.Services.AddRateLimiter(options =>
+{
+    options.RejectionStatusCode = StatusCodes.Status429TooManyRequests;
+
+    options.AddFixedWindowLimiter("fixed", limiterOptions =>
+    {
+        limiterOptions.PermitLimit = 10;
+        limiterOptions.Window = TimeSpan.FromMinutes(1);
+        limiterOptions.QueueProcessingOrder = QueueProcessingOrder.OldestFirst;
+        limiterOptions.QueueLimit = 0;
+    });
+
+    options.OnRejected = async (context, token) =>
+    {
+        context.HttpContext.Response.ContentType = "application/problem+json";
+
+        var problem = """
+        {
+          "title": "Too Many Requests",
+          "status": 429,
+          "detail": "Rate limit exceeded."
+        }
+        """;
+
+        await context.HttpContext.Response.WriteAsync(problem, token);
+    };
+});
 builder.Services.AddControllers();
+builder.Services
+    .AddApiVersioning(options =>
+    {
+        options.DefaultApiVersion = new ApiVersion(1, 0);
+        options.AssumeDefaultVersionWhenUnspecified = true;
+        options.ReportApiVersions = true;
+    })
+    .AddMvc()
+    .AddApiExplorer(options =>
+    {
+        options.GroupNameFormat = "'v'VVV";
+        options.SubstituteApiVersionInUrl = true;
+    });
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
 {
     c.SwaggerDoc("v1", new() { Title = "EnterpriseHub API", Version = "v1" });
-
     c.AddSecurityDefinition("Bearer", new Microsoft.OpenApi.Models.OpenApiSecurityScheme
     {
         Name = "Authorization",
@@ -59,7 +115,6 @@ builder.Services.AddSwaggerGen(c =>
         In = Microsoft.OpenApi.Models.ParameterLocation.Header,
         Description = "Enter: Bearer {your JWT token}"
     });
-
     c.AddSecurityRequirement(new Microsoft.OpenApi.Models.OpenApiSecurityRequirement
     {
         {
@@ -75,13 +130,10 @@ builder.Services.AddSwaggerGen(c =>
         }
     });
 });
-
-
 // ✅ DB (centralisée)
 builder.Services.AddDatabase(builder.Configuration);
 // Application services
 builder.Services.AddScoped<AuthService>();
-
 // Ports -> Infrastructure impl
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IPasswordHasher, BcryptPasswordHasher>();
@@ -151,21 +203,32 @@ if (app.Environment.IsDevelopment())
     var db = scope.ServiceProvider.GetRequiredService<EnterpriseHubDbContext>();
     db.Database.Migrate();
 }
-if (app.Environment.IsDevelopment())
+if (app.Environment.IsDevelopment() || app.Environment.IsEnvironment("Testing"))
 {
-    app.MapGet("/__throw/conflict", async context => throw new EnterpriseHub.Application.Common.Exceptions.ConflictException("boom"));
-    app.MapGet("/__throw/forbidden", async context => throw new EnterpriseHub.Application.Common.Exceptions.ForbiddenException("nope"));
+    app.MapGet("/", () => Results.Ok("✅ EnterpriseHub API is running ✅"));
+    // app.MapGet("/__throw/conflict", async context => throw new EnterpriseHub.Application.Common.Exceptions.ConflictAppException("boom"));
+    // app.MapGet("/__throw/forbidden", async context => throw new EnterpriseHub.Application.Common.Exceptions.ForbiddenAppException("nope"));
+    app.MapGet("/__throw/forbidden", context => throw new ForbiddenAppException("nope"));
+    app.MapGet("/__throw/conflict", context => throw new ConflictAppException("boom"));
 }
 // Pipeline commun (1 seule fois)
+app.UseSerilogRequestLogging();
+
 app.UseMiddleware<ExceptionHandlingMiddleware>();
+
+app.UseRouting();
+app.UseRateLimiter();
 
 app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
 
+
+// app.UseExceptionHandler();
+app.UseStatusCodePages();
+
 app.MapControllers();
 
-app.MapGet("/", () => Results.Ok("EnterpriseHub API is running ✅"));
 app.MapGet("/health", () => Results.Ok(new { status = "Healthy", timestamp = DateTime.UtcNow }));
 app.MapGet("/ready", () => Results.Ok(new { status = "ready" }));
 app.Run();

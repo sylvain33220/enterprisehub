@@ -17,6 +17,7 @@ using EnterpriseHub.Domain.Enums;
 using FluentAssertions;
 using Xunit;
 using System.ComponentModel;
+using EnterpriseHub.Application.Common.Exceptions;
 
 public class TicketServiceTests
 {
@@ -33,8 +34,8 @@ public class TicketServiceTests
       Description: "Cannot login",
       Priority: TicketPriority.Medium
     ), default);
-    await act.Should().ThrowAsync<KeyNotFoundException>()
-      .WithMessage("Project not found*");
+    await act.Should().ThrowAsync<NotFoundAppException>()
+      .WithMessage("Project * was not found.");
   }
 
   [Fact]

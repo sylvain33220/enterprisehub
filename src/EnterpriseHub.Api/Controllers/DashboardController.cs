@@ -1,11 +1,12 @@
 using EnterpriseHub.Application.Dashboard.Ports;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-
+using Asp.Versioning;
 namespace EnterpriseHub.Api.Controllers;
 
 [ApiController]
-[Route("api/dashboard")]
+[ApiVersion("1.0")]
+[Route("api/v{version:apiVersion}/[controller]")]
 [Authorize]
 public sealed class DashboardController(IDashboardReadRepository repo) : ControllerBase
 {

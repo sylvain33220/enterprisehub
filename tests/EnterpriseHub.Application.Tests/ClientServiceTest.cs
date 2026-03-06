@@ -9,6 +9,7 @@
 */
 using EnterpriseHub.Application.Clients;
 using EnterpriseHub.Application.Clients.Dto;
+using EnterpriseHub.Application.Common.Exceptions;
 using EnterpriseHub.Application.Tests.Fakes;
 using EnterpriseHub.Domain.Entities;
 using FluentAssertions;
@@ -54,8 +55,8 @@ public class ClientServiceTests
         ));
 
         // Assert
-        await act.Should().ThrowAsync<InvalidOperationException>()
-            .WithMessage("*email*exists*");
+        await act.Should().ThrowAsync<ConflictAppException>()
+            .WithMessage("A client with the same email already exists.");
     }
 
     [Fact]
@@ -69,11 +70,10 @@ public class ClientServiceTests
         var svc = new ClientService(repo);
 
         // Act
-        var deleted = await svc.DeleteAsync(client.Id); 
+        await svc.DeleteAsync(client.Id); 
         var all = await svc.GetAllAsync();
 
         // Assert
-        deleted.Should().BeTrue();
         all.Should().NotContain(x => x.Id == client.Id);
     }
 }

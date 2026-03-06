@@ -31,10 +31,10 @@ public sealed class LoginHandler : IRequestHandler<LoginCommand, AuthTokens>
         var email = (request.Email ?? "").Trim().ToLowerInvariant();
 
         var user = await _db.FindUserByEmailAsync(email, ct);
-        if (user is null) throw new UnauthorizedException("Invalid credentials.");
+        if (user is null) throw new UnauthorizedAppException("Invalid credentials.");
 
         if (!_passwords.Verify(request.Password, user.PasswordHash))
-            throw new UnauthorizedException("Invalid credentials.");
+            throw new UnauthorizedAppException("Invalid credentials.");
 
         var access = _jwt.GenerateToken(user);
 

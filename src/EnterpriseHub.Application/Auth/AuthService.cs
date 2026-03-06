@@ -11,6 +11,7 @@
 
 using EnterpriseHub.Application.Auth.Dto;
 using EnterpriseHub.Application.Auth.Ports;
+using EnterpriseHub.Application.Common.Exceptions;
 using EnterpriseHub.Domain.Entities;
 using EnterpriseHub.Domain.Enums;
 
@@ -33,11 +34,11 @@ public AuthService(IUserRepository users, IPasswordHasher hasher, IJwtTokenGener
 public async Task<AuthResponse> RegisterAsync(RegisterRequest req , CancellationToken ct =default)
   {
     var email = (req.Email ?? "").Trim().ToLowerInvariant();
-    if(string.IsNullOrWhiteSpace(email)) throw new ArgumentException("Email is required", nameof(req.Email));
-    if(string.IsNullOrWhiteSpace(req.Password) || req.Password.Length < 8) throw new ArgumentException("Password is required", nameof(req.Password));
+    if(string.IsNullOrWhiteSpace(email)) throw new UnauthorizedAppException("Email is required");
+    if(string.IsNullOrWhiteSpace(req.Password) || req.Password.Length < 8) throw new UnauthorizedAppException("Password is required");
 
     var existing = await _users.GetUserByEmailAsync(email,ct);
-    if(existing is not null) throw new InvalidOperationException("User with this email already exists");
+    if(existing is not null) throw new ConflictAppException($"User with this email {email} already exists");
 
     var hash = _hasher.Hash(req.Password);
 
@@ -66,14 +67,14 @@ public async Task<AuthResponse> RegisterAsync(RegisterRequest req , Cancellation
   public async Task<AuthResponse> LoginAsync(LoginRequest req , CancellationToken ct = default)
   {
      var email = (req.Email ?? "").Trim().ToLowerInvariant();
-        if (string.IsNullOrWhiteSpace(email)) throw new ArgumentException("Email is required.");
-        if (string.IsNullOrWhiteSpace(req.Password)) throw new ArgumentException("Password is required.");
+        if (string.IsNullOrWhiteSpace(email)) throw new UnauthorizedAppException("Email is required.");
+        if (string.IsNullOrWhiteSpace(req.Password)) throw new UnauthorizedAppException("Password is required.");
 
         var user = await _users.GetUserByEmailAsync(email, ct);
-        if (user is null) throw new UnauthorizedAccessException("Invalid credentials.");
+        if (user is null) throw new UnauthorizedAppException("Invalid credentials.");
 
         var ok = _hasher.Verify(req.Password, user.PasswordHash);
-        if (!ok) throw new UnauthorizedAccessException("Invalid credentials.");
+        if (!ok) throw new UnauthorizedAppException("Invalid credentials.");
 
         var token = _jwt.GenerateToken(user);
         return new AuthResponse(token,

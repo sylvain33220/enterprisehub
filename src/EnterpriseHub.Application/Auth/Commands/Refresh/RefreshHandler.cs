@@ -23,17 +23,17 @@ public sealed class RefreshHandler : IRequestHandler<RefreshCommand, AuthTokens>
     public async Task<AuthTokens> Handle(RefreshCommand request, CancellationToken ct)
     {
         if (string.IsNullOrWhiteSpace(request.RefreshToken))
-            throw new UnauthorizedException("Invalid credentials.");
+            throw new UnauthorizedAppException("Invalid credentials.");
 
         var incomingHash = _refresh.HashToken(request.RefreshToken);
 
         var existing = await _db.FindRefreshTokenByHashAsync(incomingHash, ct);
         if (existing is null || !existing.IsActive)
-            throw new UnauthorizedException("Invalid credentials.");
+            throw new UnauthorizedAppException("Invalid credentials.");
 
         var user = await _db.GetUserByIdAsync(existing.UserId, ct);
         if (user is null)
-            throw new UnauthorizedException("Invalid credentials.");
+            throw new UnauthorizedAppException("Invalid credentials.");
 
         // ✅ rotation
         var newRefreshToken = _refresh.GenerateToken();

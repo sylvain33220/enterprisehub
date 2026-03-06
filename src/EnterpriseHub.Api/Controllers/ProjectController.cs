@@ -8,11 +8,12 @@ using EnterpriseHub.Application.Projects;
 using EnterpriseHub.Application.Projects.Dto;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-
+using Asp.Versioning;
 namespace EnterpriseHub.Api.Controllers;
 
 [ApiController]
-[Route("projects")]
+[ApiVersion("1.0")]
+[Route("api/v{version:apiVersion}/[controller]")]
 [Authorize]
 public class ProjectsController : ControllerBase
 {
@@ -25,10 +26,7 @@ public class ProjectsController : ControllerBase
 
     [HttpGet("{id:guid}")]
     public async Task<ActionResult<ProjectDto>> GetById(Guid id, CancellationToken ct)
-    {
-        var item = await _svc.GetByIdAsync(id, ct);
-        return item is null ? NotFound() : Ok(item);
-    }
+        => Ok(await _svc.GetByIdAsync(id, ct));
 
     [HttpPost]
     public async Task<ActionResult<ProjectDto>> Create(CreateProjectRequest req, CancellationToken ct)
@@ -41,10 +39,13 @@ public class ProjectsController : ControllerBase
     public async Task<ActionResult<ProjectDto>> Update(Guid id, UpdateProjectRequest req, CancellationToken ct)
     {
         var updated = await _svc.UpdateAsync(id, req, ct);
-        return updated is null ? NotFound() : Ok(updated);
+        return Ok(updated);
     }
 
     [HttpDelete("{id:guid}")]
     public async Task<IActionResult> Delete(Guid id, CancellationToken ct)
-        => await _svc.DeleteAsync(id, ct) ? NoContent() : NotFound();
+    {
+        await _svc.DeleteAsync(id, ct); 
+        return NoContent();
+    }
 }

@@ -44,9 +44,29 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "dependencies": {
+            "Asp.Versioning.Mvc": {
+              "target": "Package",
+              "version": "[8.1.1, )"
+            },
+            "Asp.Versioning.Mvc.ApiExplorer": {
+              "target": "Package",
+              "version": "[8.1.1, )"
+            },
             "MediatR": {
               "target": "Package",
               "version": "[14.0.0, )"
+            },
+            "Serilog.AspNetCore": {
+              "target": "Package",
+              "version": "[10.0.0, )"
+            },
+            "Serilog.Settings.Configuration": {
+              "target": "Package",
+              "version": "[10.0.0, )"
+            },
+            "Serilog.Sinks.Console": {
+              "target": "Package",
+              "version": "[6.1.1, )"
             }
           },
           "imports": [
@@ -169,7 +189,7 @@
           "dependencies": {
             "FluentAssertions": {
               "target": "Package",
-              "version": "[8.8.0, )"
+              "version": "[6.12.0, )"
             },
             "Microsoft.AspNetCore.Mvc.Testing": {
               "target": "Package",
@@ -187,13 +207,13 @@
             },
             "xunit": {
               "target": "Package",
-              "version": "[2.4.2, )"
+              "version": "[2.6.6, )"
             },
             "xunit.runner.visualstudio": {
               "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
               "suppressParent": "All",
               "target": "Package",
-              "version": "[2.4.5, )"
+              "version": "[2.5.6, )"
             }
           },
           "imports": [

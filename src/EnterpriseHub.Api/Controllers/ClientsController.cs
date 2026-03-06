@@ -2,12 +2,14 @@ using EnterpriseHub.Application.Clients;
 using EnterpriseHub.Application.Clients.Dto;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-
+using Asp.Versioning;
+using Microsoft.AspNetCore.Http.HttpResults;
 namespace EnterpriseHub.Api.Controllers;
 
 [ApiController]
-[Route("clients")]
-[Authorize] // on protège: besoin token
+[ApiVersion("1.0")]
+[Route("api/v{version:apiVersion}/[controller]")]
+[Authorize] // on protège: besoin token pour accéder à ces endpoints
 public class ClientsController : ControllerBase
 {
     private readonly ClientService _svc;
@@ -15,33 +17,31 @@ public class ClientsController : ControllerBase
 
     [HttpGet]
     public async Task<ActionResult<List<ClientDto>>> GetAll(CancellationToken ct)
-        => Ok(await _svc.GetAllAsync(ct));
+    => Ok(await _svc.GetAllAsync(ct));
+    // {
+    //     return  Ok(await Task.FromResult(new { message = "Clients enpoints - GET all" }));
+        
+    // }
 
     [HttpGet("{id:guid}")]
     public async Task<ActionResult<ClientDto>> GetById(Guid id, CancellationToken ct)
-    {
-        var item = await _svc.GetByIdAsync(id, ct);
-        return item is null ? NotFound() : Ok(item);
-    }
+        => Ok(await _svc.GetByIdAsync(id, ct));    
 
     [HttpPost]
     public async Task<ActionResult<ClientDto>> Create([FromBody] CreateClientRequest req, CancellationToken ct)
     {
             var created = await _svc.CreateAsync(req, ct);
-            return CreatedAtAction(nameof(GetById), new { id = created.Id }, created);
+            return CreatedAtAction(nameof(GetById), new { id = created.Id, version="1.0" }, created);
     }
 
     [HttpPut("{id:guid}")]
     public async Task<ActionResult<ClientDto>> Update(Guid id, [FromBody] UpdateClientRequest req, CancellationToken ct)
-    {
-        var updated = await _svc.UpdateAsync(id, req, ct);
-        return updated is null ? NotFound() : Ok(updated);
-    }
+        => Ok(await _svc.UpdateAsync(id, req, ct));
 
     [HttpDelete("{id:guid}")]
     public async Task<IActionResult> Delete(Guid id, CancellationToken ct)
     {
-        var ok = await _svc.DeleteAsync(id, ct);
-        return ok ? NoContent() : NotFound();
+        await _svc.DeleteAsync(id, ct);
+        return NoContent();
     }
 }

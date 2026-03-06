@@ -22,7 +22,7 @@ public class ClientRepository : IClientRepository
         => _db.Clients.AsNoTracking().Where(c => c.IsActive).OrderBy(c => c.Name).ToListAsync(ct);
 
     public Task<Client?> GetByIdAsync(Guid id, CancellationToken ct = default)
-        => _db.Clients.FirstOrDefaultAsync(c => c.Id == id, ct);
+        => _db.Clients.FirstOrDefaultAsync(c => c.Id == id && c.IsActive, ct);
 
     public async Task AddAsync(Client client, CancellationToken ct = default)
     {

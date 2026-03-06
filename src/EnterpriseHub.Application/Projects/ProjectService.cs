@@ -12,6 +12,7 @@ using EnterpriseHub.Application.Projects.Dto;
 using EnterpriseHub.Application.Projects.Ports;
 using EnterpriseHub.Application.Clients.Ports;
 using EnterpriseHub.Domain.Entities;
+using EnterpriseHub.Application.Common.Exceptions;
 
 namespace EnterpriseHub.Application.Projects;
 
@@ -31,14 +32,14 @@ public class ProjectService
 
     public async Task<ProjectDto?> GetByIdAsync(Guid id, CancellationToken ct)
     {
-        var project = await _repo.GetByIdAsync(id, ct);
-        return project is null ? null : ToDto(project);
+        var project = await _repo.GetByIdAsync(id, ct) ?? throw new NotFoundAppException($"Project {id} not found.");
+        return ToDto(project);
     }
 
     public async Task<ProjectDto> CreateAsync(CreateProjectRequest req, CancellationToken ct)
     {
         if (await _clients.GetByIdAsync(req.ClientId, ct) is null)
-            throw new KeyNotFoundException("Client not found.");
+            throw new ValidationAppException($"Client {req.ClientId} does not exist.");
 
         var project = new Project(req.ClientId, req.Name, req.Description );
         await _repo.AddAsync(project, ct);
@@ -46,24 +47,19 @@ public class ProjectService
         return ToDto(project);
     }
 
-    public async Task<ProjectDto?> UpdateAsync(Guid id, UpdateProjectRequest req, CancellationToken ct)
+    public async Task<ProjectDto> UpdateAsync(Guid id, UpdateProjectRequest req, CancellationToken ct)
     {
-        var project = await _repo.GetByIdAsync(id, ct);
-        if (project is null) return null;
-
-        project.Update(req.Name, req.Description);
+    var project = await _repo.GetByIdAsync(id, ct) ?? throw new NotFoundAppException($"Project {id} was not found.");
+    project.Update(req.Name, req.Description);
         await _repo.UpdateAsync(project, ct);
 
         return ToDto(project);
     }
 
-    public async Task<bool> DeleteAsync(Guid id, CancellationToken ct)
+    public async Task DeleteAsync(Guid id, CancellationToken ct)
     {
-        var project = await _repo.GetByIdAsync(id, ct);
-        if (project is null) return false;
-
+        var project = await _repo.GetByIdAsync(id, ct) ?? throw new NotFoundAppException($"Project {id} not found.");
         await _repo.DeleteAsync(project, ct);
-        return true;
     }
 
     private static ProjectDto ToDto(Project p)

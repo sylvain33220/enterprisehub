@@ -10,6 +10,7 @@
 */
 using EnterpriseHub.Application.Clients.Dto;
 using EnterpriseHub.Application.Clients.Ports;
+using EnterpriseHub.Application.Common.Exceptions;
 using EnterpriseHub.Domain.Entities;
 
 namespace EnterpriseHub.Application.Clients;
@@ -23,26 +24,27 @@ public class ClientService
     public async Task<List<ClientDto>> GetAllAsync(CancellationToken ct = default)
     {
         var items = await _repo.GetAllAsync(ct);
-        return items.Select(ToDto).ToList();
+        return [.. items.Select(ToDto)];
     }
 
-    public async Task<ClientDto?> GetByIdAsync(Guid id, CancellationToken ct = default)
+    public async Task<ClientDto> GetByIdAsync(Guid id, CancellationToken ct = default)
     {
-        var client = await _repo.GetByIdAsync(id, ct);
-        return client is null ? null : ToDto(client);
+        var client = await _repo.GetByIdAsync(id, ct) ?? throw new NotFoundAppException($"Client {id} was not found.");
+        return ToDto(client);
+        
     }
 
     public async Task<ClientDto> CreateAsync(CreateClientRequest req, CancellationToken ct = default)
     {
         if (string.IsNullOrWhiteSpace(req.Name))
-            throw new ArgumentException("Name is required.");
+            throw new ValidationAppException("Client name is required.");
 
         var email = string.IsNullOrWhiteSpace(req.Email) ? null : req.Email.Trim().ToLowerInvariant();
 
         if (email is not null)
         {
             var exists = await _repo.ExistsByEmailAsync(email, ct);
-            if (exists) throw new InvalidOperationException("Client email already exists.");
+            if (exists) throw new ConflictAppException("A client with the same email already exists.");
         }
         var client = new Client(req.Name, req.Email, req.Phone);
 
@@ -51,10 +53,10 @@ public class ClientService
         return ToDto(client);
     }
 
-    public async Task<ClientDto?> UpdateAsync(Guid id, UpdateClientRequest req, CancellationToken ct = default)
+    public async Task<ClientDto> UpdateAsync(Guid id, UpdateClientRequest req, CancellationToken ct = default)
     {
-        var client = await _repo.GetByIdAsync(id, ct);
-        if (client is null) return null;
+        var client = await _repo.GetByIdAsync(id, ct) ?? throw new NotFoundAppException($"Client {id} not found.");
+       
 
         client.Update(req.Name, req.Email, req.Phone);
         await _repo.UpdateAsync(client, ct);
@@ -62,13 +64,11 @@ public class ClientService
         return ToDto(client);
     }
 
-    public async Task<bool> DeleteAsync(Guid id, CancellationToken ct = default)
+    public async Task DeleteAsync(Guid id, CancellationToken ct = default)
     {
-        var client = await _repo.GetByIdAsync(id, ct);
-        if (client is null) return false;
-
+        var client = await _repo.GetByIdAsync(id, ct) ?? throw new NotFoundAppException($"Client {id} not found.");
+       
         await _repo.DeleteAsync(client, ct);
-        return true;
     }
 
     private static ClientDto ToDto(Client c)

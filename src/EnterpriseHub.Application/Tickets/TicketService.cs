@@ -13,6 +13,7 @@ using EnterpriseHub.Application.Tickets.Ports;
 using EnterpriseHub.Application.Projects.Ports;
 using EnterpriseHub.Domain.Entities;
 using EnterpriseHub.Domain.Enums;
+using EnterpriseHub.Application.Common.Exceptions;
 
 namespace EnterpriseHub.Application.Tickets;
 
@@ -30,19 +31,22 @@ public class TicketService
     public async Task<List<TicketDto>> GetAllAsync(CancellationToken ct)
         => (await _repo.GetAllAsync(ct)).Select(ToDto).ToList();
 
-    public async Task<TicketDto?> GetByIdAsync(Guid id, CancellationToken ct)
+    public async Task<TicketDto> GetByIdAsync(Guid id, CancellationToken ct)
     {
-        var ticket = await _repo.GetByIdAsync(id, ct);
-        return ticket is null ? null : ToDto(ticket);
+    var ticket = await _repo.GetByIdAsync(id, ct) ?? throw new NotFoundAppException($"Ticket '{id}' was not found.");
+    return ToDto(ticket);
     }
 
    public async Task<TicketDto> CreateAsync(CreateTicketRequest req, CancellationToken ct)
 {
     if (await _projects.GetByIdAsync(req.ProjectId, ct) is null)
-        throw new KeyNotFoundException("Project not found.");
+         throw new NotFoundAppException($"Project '{req.ProjectId}' was not found.");
 
     if (!Enum.IsDefined(typeof(TicketPriority), req.Priority))
-        throw new ArgumentException("Invalid ticket priority.", nameof(req.Priority));
+        throw new ValidationAppException(new Dictionary<string, string[]>
+        {
+            ["priority"] = new[] { "Invalid ticket priority." }
+        });
 
     var ticket = new Ticket(req.ProjectId, req.Title, req.Description, req.Priority);
     await _repo.AddAsync(ticket, ct);
@@ -50,12 +54,11 @@ public class TicketService
     return ToDto(ticket);
 }
 
-    public async Task<TicketDto?> UpdateAsync(Guid id, UpdateTicketRequest req, CancellationToken ct)
+    public async Task<TicketDto> UpdateAsync(Guid id, UpdateTicketRequest req, CancellationToken ct)
     {
-        var ticket = await _repo.GetByIdAsync(id, ct);
-        if (ticket is null) return null;
-
-        ticket.Update(req.Title, req.Description);
+    var ticket = await _repo.GetByIdAsync(id, ct) ?? throw new NotFoundAppException($"Ticket '{id}' was not found.");
+  
+    ticket.Update(req.Title, req.Description);
         ticket.UpdateStatus(req.Status.ToString());
         ticket.AssingnTo(req.AssignedToUserId);
 
@@ -63,13 +66,11 @@ public class TicketService
         return ToDto(ticket);
     }
 
-    public async Task<bool> DeleteAsync(Guid id, CancellationToken ct)
+    public async Task  DeleteAsync(Guid id, CancellationToken ct)
     {
-        var ticket = await _repo.GetByIdAsync(id, ct);
-        if (ticket is null) return false;
-
+        var ticket = await _repo.GetByIdAsync(id, ct) ?? throw new NotFoundAppException($"Ticket '{id}' was not found.");
+      
         await _repo.DeleteAsync(ticket, ct);
-        return true;
     }
 
     private static TicketDto ToDto(Ticket t)

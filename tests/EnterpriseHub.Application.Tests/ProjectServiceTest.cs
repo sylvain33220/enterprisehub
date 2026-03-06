@@ -8,6 +8,7 @@
 @version 1.0
 */
 
+using EnterpriseHub.Application.Common.Exceptions;
 using EnterpriseHub.Application.Projects;
 using EnterpriseHub.Application.Projects.Dto;
 using EnterpriseHub.Application.Tests.Fakes;
@@ -31,8 +32,8 @@ public class ProjectServiceTests
             Budget: 1000m
         ), default);
 
-        await act.Should().ThrowAsync<KeyNotFoundException>()
-            .WithMessage("Client not found*");
+        await act.Should().ThrowAsync<ValidationAppException>()
+            .WithMessage("Client * does not exist.");
     }
 
     [Fact]
@@ -60,17 +61,18 @@ public class ProjectServiceTests
     }
 
     [Fact]
-    public async Task UpdateAsync_Should_Return_Null_When_Project_Not_Found()
+    public async Task UpdateAsync_Should_Throw_When_Project_Not_Found()
     {
         var projects = new InMemoryProjectRepository();
         var clients = new InMemoryClientRepository();
         var svc = new ProjectService(projects, clients);
 
-        var updated = await svc.UpdateAsync(Guid.NewGuid(), new UpdateProjectRequest(
-            Name: "Updated",
+        Func<Task> act = () => svc.UpdateAsync(Guid.NewGuid(), new UpdateProjectRequest(
+            Name: "Updated name",
             Description: "Updated desc"
         ), default);
-
-        updated.Should().BeNull();
+        await act.Should().ThrowAsync<NotFoundAppException>()
+            .WithMessage("Project * was not found.");
+    
     }
 }

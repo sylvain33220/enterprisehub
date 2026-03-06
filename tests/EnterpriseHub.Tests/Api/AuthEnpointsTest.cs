@@ -21,11 +21,11 @@ public class AuthEndpointsTests : IClassFixture<EnterpriseHubApiFactory>
     [Fact]
     public async Task Refresh_Should_Return_401_ProblemDetails_When_Missing_Cookie()
     {
-        var res = await _client.PostAsync("/auth/refresh", content: null);
+        var res = await _client.PostAsync("/api/v1.0/auth/refresh", content: null);
         var body = await res.Content.ReadAsStringAsync();
-Console.WriteLine(res.StatusCode);
-Console.WriteLine(res.Content.Headers.ContentType?.MediaType);
-Console.WriteLine(body);
+        Console.WriteLine(res.StatusCode);
+        Console.WriteLine(res.Content.Headers.ContentType?.MediaType);
+        Console.WriteLine(body);
 
         res.StatusCode.Should().Be(HttpStatusCode.Unauthorized);
         res.Content.Headers.ContentType!.MediaType.Should().Be("application/problem+json");

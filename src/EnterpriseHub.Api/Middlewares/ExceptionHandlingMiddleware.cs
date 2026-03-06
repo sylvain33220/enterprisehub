@@ -1,8 +1,6 @@
 using System.Diagnostics;
 using EnterpriseHub.Application.Common.Exceptions;
-using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.WebUtilities;
 
 namespace EnterpriseHub.Api.Middlewares;
 
@@ -11,7 +9,9 @@ public sealed class ExceptionHandlingMiddleware : IMiddleware
     private readonly ILogger<ExceptionHandlingMiddleware> _logger;
     private readonly IHostEnvironment _env;
 
-    public ExceptionHandlingMiddleware(ILogger<ExceptionHandlingMiddleware> logger, IHostEnvironment env)
+    public ExceptionHandlingMiddleware(
+        ILogger<ExceptionHandlingMiddleware> logger,
+        IHostEnvironment env)
     {
         _logger = logger;
         _env = env;
@@ -23,37 +23,42 @@ public sealed class ExceptionHandlingMiddleware : IMiddleware
         {
             await next(context);
         }
+        catch (ValidationAppException ex)
+        {
+            _logger.LogWarning(ex, "Handled validation exception for {Method} {Path}", context.Request.Method, context.Request.Path);
+            await WriteProblem(context, ex.StatusCode, ex.Title, ex.Message, ex.ErrorCode, ex.Errors);
+        }
         catch (AppException ex)
         {
-            _logger.LogWarning(ex, "Handled app exception");
-            await WriteProblem(context, ex.StatusCode, ex.Message);
+            _logger.LogWarning(ex, "Handled app exception for {Method} {Path}", context.Request.Method, context.Request.Path);
+            await WriteProblem(context, ex.StatusCode, ex.Title, ex.Message, ex.ErrorCode);
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "Unhandled exception");
+            _logger.LogError(ex, "Unhandled exception for {Method} {Path}", context.Request.Method, context.Request.Path);
 
-            var (status, title) = ex switch
-            {
-                ArgumentException => (StatusCodes.Status400BadRequest, "Validation error"),
-                UnauthorizedException => (StatusCodes.Status401Unauthorized, "Unauthorized"),
-                ConflictException => (StatusCodes.Status409Conflict, "Conflict"),
-                InvalidOperationException => (StatusCodes.Status409Conflict, "Conflict"),
-                ForbiddenException => (StatusCodes.Status403Forbidden, "Forbidden"),
-                KeyNotFoundException => (StatusCodes.Status404NotFound, "Not found"),
-                _ => (StatusCodes.Status500InternalServerError, "Server error")
-            };
+            var status = HttpStatus.InternalServerError;
+            var title = "Internal Server Error";
+            var detail = _env.IsDevelopment()
+                ? ex.Message
+                : "An unexpected error occurred.";
 
-            // ✅ ne pas leak en prod sur 500
-            var detail = status == 500 && !_env.IsDevelopment()
-                ? "An unexpected error occurred."
-                : ex.Message;
-
-            await WriteProblem(context, status, detail, title);
+            await WriteProblem(context, status, title, detail, "server_error");
         }
     }
 
-    private static async Task WriteProblem(HttpContext ctx, int status, string detail, string? title = null)
+    private static async Task WriteProblem(
+        HttpContext ctx,
+        int status,
+        string title,
+        string detail,
+        string? errorCode = null,
+        object? errors = null)
     {
+        if (ctx.Response.HasStarted)
+        {
+            return;
+        }
         ctx.Response.StatusCode = status;
         ctx.Response.ContentType = "application/problem+json";
 
@@ -62,12 +67,21 @@ public sealed class ExceptionHandlingMiddleware : IMiddleware
         var problem = new ProblemDetails
         {
             Status = status,
-            Title = title ?? ReasonPhrases.GetReasonPhrase(status),
+            Title = title,
             Detail = detail,
+            Type = $"https://httpstatuses.com/{status}",
             Instance = ctx.Request.Path
         };
 
         problem.Extensions["traceId"] = traceId;
+        problem.Extensions["method"] = ctx.Request.Method;
+        problem.Extensions["path"] = ctx.Request.Path;
+    
+        if (!string.IsNullOrWhiteSpace(errorCode))
+            problem.Extensions["code"] = errorCode;
+
+        if (errors is not null)
+            problem.Extensions["errors"] = errors;
 
         await ctx.Response.WriteAsJsonAsync(problem);
     }

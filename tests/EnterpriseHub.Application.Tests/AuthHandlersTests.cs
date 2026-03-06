@@ -128,7 +128,7 @@ public class AuthHandlersTests
             UserAgent = "xunit"
         }, default);
 
-        var ex = await act.Should().ThrowAsync<UnauthorizedException>();
+        var ex = await act.Should().ThrowAsync<UnauthorizedAppException>();
         ex.Which.StatusCode.Should().Be(401);
     }
 }

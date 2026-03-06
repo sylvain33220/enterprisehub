@@ -2,11 +2,12 @@ using EnterpriseHub.Application.Tickets;
 using EnterpriseHub.Application.Tickets.Dto;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-
+using Asp.Versioning;   
 namespace EnterpriseHub.Api.Controllers;
 
 [ApiController]
-[Route("tickets")]
+[ApiVersion("1.0")]
+[Route("api/v{version:apiVersion}/[controller]")]
 [Authorize]
 public class TicketsController : ControllerBase
 {
@@ -21,7 +22,7 @@ public class TicketsController : ControllerBase
     public async Task<ActionResult<TicketDto>> GetById(Guid id, CancellationToken ct)
     {
         var item = await _svc.GetByIdAsync(id, ct);
-        return item is null ? NotFound() : Ok(item);
+        return Ok(item);
     }
 
     [HttpPost]
@@ -35,10 +36,14 @@ public class TicketsController : ControllerBase
     public async Task<ActionResult<TicketDto>> Update(Guid id, UpdateTicketRequest req, CancellationToken ct)
     {
         var updated = await _svc.UpdateAsync(id, req, ct);
-        return updated is null ? NotFound() : Ok(updated);
+        return Ok(updated);
     }
 
     [HttpDelete("{id:guid}")]
     public async Task<IActionResult> Delete(Guid id, CancellationToken ct)
-        => await _svc.DeleteAsync(id, ct) ? NoContent() : NotFound();
+    {
+         await _svc.DeleteAsync(id, ct);
+        return NoContent();
+        
+    }
 }

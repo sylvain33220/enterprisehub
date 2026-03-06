@@ -10,10 +10,15 @@ using EnterpriseHub.Application.Auth.Commands.Login;
 using Microsoft.Extensions.Options;
 using EnterpriseHub.Api.Auth;
 using EnterpriseHub.Application.Common.Exceptions;
+using Microsoft.AspNetCore.RateLimiting;
+using Asp.Versioning;
+
 namespace EnterpriseHub.Api.Controllers;
 
 [ApiController]
-[Route("auth")]
+[ApiVersion("1.0")]
+[Route("api/v{version:apiVersion}/[controller]")]
+[EnableRateLimiting("fixed")]
 public class AuthController : ControllerBase
 {
     private readonly AuthService _auth;
@@ -124,7 +129,7 @@ public async Task<IActionResult> Revoke(CancellationToken ct)
 {
     var rt = Request.Cookies[_cookieCfg.RefreshCookieName];
     if (string.IsNullOrWhiteSpace(rt))
-        throw new UnauthorizedException("Missing refresh cookie.");
+        throw new UnauthorizedAppException("Missing refresh cookie.");
          await _mediator.Send(new RevokeCommand { RefreshToken = rt }, ct);
 
     DeleteRefreshCookie();
