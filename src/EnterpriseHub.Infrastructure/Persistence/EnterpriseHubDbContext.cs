@@ -1,3 +1,13 @@
+/*
+@author: Poteaux sylvain
+@file: EnterpriseHubDbContext.cs
+@description: DbContext implementation for the EnterpriseHub application, responsible for managing database access and providing DbSet properties for each entity. It also includes configuration for entity relationships and indexes, as well as implementations of methods defined in the IEnterpriseHubDbContext interface for user and refresh token management.
+@version: 1.0
+@date: 2026.03
+@site: https://studio-purple.com
+@mail : poteaux.sylvain@gmail.com
+@license: MIT
+*/
 using EnterpriseHub.Application.Common.Interfaces;
 using EnterpriseHub.Domain.Entities;
 using Microsoft.EntityFrameworkCore;

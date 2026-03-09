@@ -1,3 +1,13 @@
+/*
+@author: Poteaux sylvain
+@file: TestAuthHandler.cs
+@description: Custom authentication handler for testing purposes, providing a predefined set of claims for authenticated users.
+@version: 1.0
+@date: 2026.03
+@site: https://studio-purple.com
+@mail : poteaux.sylvain@gmail.com
+@license: MIT
+*/
 using System.Security.Claims;
 using System.Text.Encodings.Web;
 using Microsoft.AspNetCore.Authentication;

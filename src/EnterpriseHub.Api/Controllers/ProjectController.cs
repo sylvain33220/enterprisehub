@@ -1,8 +1,11 @@
 /*
-* @file  : ProjectController.cs
-* @brief : Controller for managing projects, including CRUD operations.
-* @date  : 2024-06-01
-* @author : Poteaux sylvain
+@author: Poteaux sylvain
+@file: ProjectController.cs
+@description: Controller for managing project-related endpoints, including CRUD operations. It uses authorization to protect the endpoints, ensuring that only authenticated users can access them. The controller interacts with the ProjectService to perform the necessary operations and returns appropriate HTTP responses based on the outcome of each request.
+@version: 1.0
+@date: 2026.03
+@site: https://studio-purple.com
+@license: MIT
 */
 using EnterpriseHub.Application.Projects;
 using EnterpriseHub.Application.Projects.Dto;

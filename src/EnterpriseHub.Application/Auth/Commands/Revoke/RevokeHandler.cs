@@ -1,3 +1,13 @@
+/*
+@author: Poteaux sylvain
+@file: RevokeHandler.cs
+@description: Handler for the revoke token command, responsible for invalidating a given refresh token to prevent its further use. It checks the validity of the incoming refresh token, and if found active, it revokes it by setting the revoked timestamp and optionally linking it to a replacement token hash.
+@version: 1.0
+@date: 2026.03
+@site: https://studio-purple.com
+@mail : poteaux.sylvain@gmail.com
+@license: MIT
+*/
 using EnterpriseHub.Application.Auth.Ports;
 using EnterpriseHub.Application.Common.Interfaces;
 using MediatR;

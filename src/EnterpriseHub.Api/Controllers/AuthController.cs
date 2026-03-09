@@ -1,3 +1,12 @@
+/*
+@author: Poteaux sylvain
+@file: AuthController.cs
+@description: Controller for authentication-related endpoints, including registration, login, token refresh, and revocation. It uses MediatR to handle commands and queries, and manages refresh tokens via secure HTTP-only cookies. The controller also includes rate limiting to prevent abuse of authentication endpoints.
+@version: 1.0
+@date: 2026.03
+@site: https://studio-purple.com
+@license: MIT
+ */
 using EnterpriseHub.Application.Auth;
 using EnterpriseHub.Application.Auth.Commands.Refresh;
 using EnterpriseHub.Application.Auth.Commands.Revoke;

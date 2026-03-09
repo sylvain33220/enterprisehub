@@ -1,3 +1,13 @@
+/*
+@author: Poteaux sylvain
+@file: TicketsController.cs
+@description: Controller for managing ticket-related endpoints, including CRUD operations. It uses authorization to protect the endpoints, ensuring that only authenticated users can access them. The controller interacts with the TicketService to perform the necessary operations and returns appropriate HTTP responses based on the outcome of each request.
+@version: 1.0
+@date: 2026.03
+@site: https://studio-purple.com
+@mail :poteaux.sylvain@gmail.com
+@license: MIT
+*/
 using EnterpriseHub.Application.Tickets;
 using EnterpriseHub.Application.Tickets.Dto;
 using Microsoft.AspNetCore.Authorization;

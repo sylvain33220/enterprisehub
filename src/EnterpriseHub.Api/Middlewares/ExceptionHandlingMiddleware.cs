@@ -1,3 +1,13 @@
+/*
+@author: Poteaux sylvain
+@file: ExceptionHandlingMiddleware.cs
+@description: Middleware for handling exceptions globally, providing consistent error responses and logging.
+@version: 1.0
+@date: 2026.03
+@site: https://studio-purple.com
+@mail :poteaux.sylvain@gmail.com
+@license: MIT
+*/
 using System.Diagnostics;
 using EnterpriseHub.Application.Common.Exceptions;
 using Microsoft.AspNetCore.Mvc;

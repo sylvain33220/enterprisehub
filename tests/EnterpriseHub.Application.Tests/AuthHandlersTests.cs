@@ -1,3 +1,13 @@
+/*
+@author: Poteaux sylvain
+@file: AuthHandlersTests.cs
+@description: Unit tests for authentication handlers, covering login, token refresh, and token revocation scenarios. The tests use in-memory implementations of the database context and related services to verify the correct behavior of the authentication logic, including token generation, storage, rotation, and invalidation.
+@version: 1.0
+@date: 2026.03
+@site: https://studio-purple.com
+@mail : poteaux.sylvain@gmail.com
+@license: MIT
+*/
 using EnterpriseHub.Application.Auth.Commands.Login;
 using EnterpriseHub.Application.Auth.Commands.Refresh;
 using EnterpriseHub.Application.Auth.Commands.Revoke;

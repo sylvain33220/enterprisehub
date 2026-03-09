@@ -1,3 +1,12 @@
+/*
+@author: Poteaux sylvain
+@file: ClientsController.cs
+@description: Controller for managing client-related endpoints, including CRUD operations. It uses authorization to protect the endpoints, ensuring that only authenticated users can access them. The controller interacts with the ClientService to perform the necessary operations and returns appropriate HTTP responses based on the outcome of each request.
+@version: 1.0
+@date: 2026.03
+@site: https://studio-purple.com
+@license: MIT
+*/
 using EnterpriseHub.Application.Clients;
 using EnterpriseHub.Application.Clients.Dto;
 using Microsoft.AspNetCore.Authorization;

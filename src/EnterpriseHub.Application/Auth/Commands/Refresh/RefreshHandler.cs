@@ -1,3 +1,13 @@
+/*
+@author: Poteaux sylvain
+@file: RefreshHandler.cs
+@description: Handler for the refresh token command, responsible for validating the incoming refresh token, rotating it, and generating new authentication tokens.
+@version: 1.0
+@date: 2026.03
+@site: https://studio-purple.com
+@mail :poteaux.sylvain@gmail.com
+@license: MIT
+*/
 using EnterpriseHub.Application.Auth.Dto;
 using EnterpriseHub.Application.Auth.Ports;
 using EnterpriseHub.Application.Common.Exceptions;

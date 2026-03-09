@@ -1,3 +1,13 @@
+/*
+@author: Poteaux sylvain
+@file: Client.cs
+@description: Entity representing a client in the EnterpriseHub application. It includes properties for the client's name, email, phone number, and active status. The class provides methods for updating client information, activating/deactivating the client, and validating input data.
+@version: 1.0
+@date: 2026.03
+@site: https://studio-purple.com
+@mail : poteaux.sylvain@gmail.com
+@license: MIT
+*/
 using EnterpriseHub.Domain.Common;
 
 namespace EnterpriseHub.Domain.Entities;

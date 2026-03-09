@@ -1,3 +1,12 @@
+/*
+@author: Poteaux sylvain
+@file: DashboardController.cs
+@description: Controller for dashboard-related endpoints, providing aggregated data for the application's dashboard. It includes endpoints for retrieving an overview of key metrics, ticket counts by status, and top clients based on activity. The controller uses authorization to ensure that only authenticated users can access the dashboard data, and it interacts with the IDashboardReadRepository to fetch the necessary information from the data source.
+@version: 1.0
+@date: 2026.03
+@site: https://studio-purple.com
+@license: MIT
+*/
 using EnterpriseHub.Application.Dashboard.Ports;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;

@@ -1,3 +1,13 @@
+/*
+@author: Poteaux sylvain
+@file: ClientsEndpointsTests.cs
+@description: Integration tests for client endpoints, verifying authentication, authorization, and response handling.
+@version: 1.0
+@date: 2026.03
+@site: https://studio-purple.com
+@mail : poteaux.sylvain@gmail.com
+@license: MIT
+*/
 using System.Net;
 using System.Net.Http.Json;
 using EnterpriseHub.Tests.Api;

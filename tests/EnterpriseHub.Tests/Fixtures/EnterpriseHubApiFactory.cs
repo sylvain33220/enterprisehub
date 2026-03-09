@@ -1,3 +1,13 @@
+/*
+@author: Poteaux sylvain
+@file: EnterpriseHubApiFactory.cs
+@description: Custom WebApplicationFactory for integration tests, configuring the test environment and providing methods to create authenticated HTTP clients.
+@version: 1.0
+@date: 2026.03
+@site: https://studio-purple.com
+@mail : poteaux.sylvain@gmail.com
+@license: MIT
+*/
 using EnterpriseHub.Tests.Auth;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc.Testing;

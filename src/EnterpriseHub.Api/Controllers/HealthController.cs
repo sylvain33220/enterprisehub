@@ -1,3 +1,12 @@
+/*
+@author: Poteaux sylvain
+@file: HealthController.cs
+@description: Controller for health check endpoints, providing a simple way to verify the application's health status, including database connectivity.
+@version: 1.0
+@date: 2026.03
+@site: https://studio-purple.com
+@license: MIT
+*/
 using EnterpriseHub.Infrastructure.Persistence;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;

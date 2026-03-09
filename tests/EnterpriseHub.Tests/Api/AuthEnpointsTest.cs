@@ -1,3 +1,13 @@
+/*
+@author: Poteaux sylvain
+@file: AuthEndpointsTests.cs
+@description: Integration tests for authentication endpoints, verifying token refresh, conflict handling, and unknown route responses.
+@version: 1.0
+@date: 2026.03
+@site: https://studio-purple.com
+@mail : poteaux.sylvain@gmail.com
+@license: MIT
+*/
 using System.Net;
 using System.Net.Http.Json;
 using FluentAssertions;
@@ -52,7 +62,6 @@ public class AuthEndpointsTests : IClassFixture<EnterpriseHubApiFactory>
 
         res.StatusCode.Should().Be(HttpStatusCode.NotFound);
         
-        // 404 ici c’est le pipeline ASP.NET, pas ton middleware (normal)
     }
     
 }

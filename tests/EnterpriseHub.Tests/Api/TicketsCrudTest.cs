@@ -1,3 +1,13 @@
+/*
+@author: Poteaux sylvain
+@file: TicketsCrudTest.cs
+@description: Integration tests for ticket CRUD operations, verifying creation, retrieval, and deletion of tickets.
+@version: 1.0
+@date: 2026.03
+@site: https://studio-purple.com
+@mail : poteaux.sylvain@gmail.com
+@license: MIT
+*/
 using System.Net;
 using System.Net.Http.Json;
 using FluentAssertions;

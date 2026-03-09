@@ -1,3 +1,13 @@
+/*
+@author: Poteaux sylvain
+@file: ProjetsCrudTest.cs
+@description: Integration tests for project CRUD operations, verifying creation, retrieval, and deletion of projects.
+@version: 1.0
+@date: 2026.03
+@site: https://studio-purple.com
+@mail : poteaux.sylvain@gmail.com
+@license: MIT
+*/
 using System.Net;
 using System.Net.Http.Json;
 using FluentAssertions;
